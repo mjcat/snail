@@ -2,11 +2,6 @@
 
 > A MEVN project
 
-## Setup References
-[MEVN Setup](https://www.djamware.com/post/5a1b779f80aca75eadc12d6e/mongo-express-vue-nodejs-mevn-stack-crud-web-application)
-
-[Considered this setup as well but not as clean](https://medium.com/@anaida07/mevn-stack-application-part-1-3a27b61dcae0)
-
 ## Build Setup
 
 ``` bash
@@ -32,4 +27,12 @@ npm run e2e
 npm test
 ```
 
+## Setup References
+[MEVN Setup](https://www.djamware.com/post/5a1b779f80aca75eadc12d6e/mongo-express-vue-nodejs-mevn-stack-crud-web-application)
+
+[Considered this setup as well but not as clean](https://medium.com/@anaida07/mevn-stack-application-part-1-3a27b61dcae0)
+
+[Multiple GitHub accounts](https://code.tutsplus.com/tutorials/quick-tip-how-to-work-with-github-and-multiple-accounts--net-22574)
+
+## Vue.js
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
