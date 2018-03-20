@@ -17,11 +17,14 @@ npm run dev:server
 # build for production and view the bundle analyzer report
 npm run build --report
 
-# run unit tests
-npm run unit
+# run client unit tests
+npm run test:client
+
+# run server unit tests
+npm run test:server
 
 # run e2e tests
-npm run e2e
+npm run test:e2e
 
 # run all tests
 npm test
@@ -31,6 +34,8 @@ npm test
 [MEVN Setup](https://www.djamware.com/post/5a1b779f80aca75eadc12d6e/mongo-express-vue-nodejs-mevn-stack-crud-web-application)
 
 [Considered this setup as well but not as clean](https://medium.com/@anaida07/mevn-stack-application-part-1-3a27b61dcae0)
+
+[Boilerplate with Auth](https://github.com/icebob/vue-express-mongo-boilerplate)
 
 [Multiple GitHub accounts](https://code.tutsplus.com/tutorials/quick-tip-how-to-work-with-github-and-multiple-accounts--net-22574)
 
