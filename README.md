@@ -11,7 +11,7 @@ npm install
 # load Vuejs client with hot reload at localhost:8080
 npm run dev:client
 
-# spin up Node Express API server with nodemon at localhost:8081
+# spin up Node Express API server with nodemon at localhost:8081 (be sure to run npm run build if using this to test client)
 npm run dev:server
 
 # build for production and view the bundle analyzer report
@@ -32,6 +32,8 @@ npm test
 
 ## Setup References
 [MEVN Setup](https://www.djamware.com/post/5a1b779f80aca75eadc12d6e/mongo-express-vue-nodejs-mevn-stack-crud-web-application)
+
+[Adding Pug and Stylus Loaders](https://forum.vuejs.org/t/setting-up-stylus-and-pug-in-webpack-template/1839/2)
 
 [Considered this setup as well but not as clean](https://medium.com/@anaida07/mevn-stack-application-part-1-3a27b61dcae0)
 
