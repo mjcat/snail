@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import AppHeader from '@/components/Header';
-import AppFooter from '@/components/Footer';
+import AppHeader from '@/views/Header';
+import AppFooter from '@/views/Footer';
 
 export default {
   name: 'App',
