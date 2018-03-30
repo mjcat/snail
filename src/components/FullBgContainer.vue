@@ -25,59 +25,24 @@
                 span.label Email
 </template>
 
+<script>
+  import FullBgWrapper from '@/components/FullBgWrapper';
+  
+  export default {
+    components: [ FullBgWrapper ],
+  };
+</script>
+
 <style scoped>
-  ol, ul {
+
+
+  ul {
     list-style: none;
   }
 
-  blockquote, q {
-    quotes: none;
-  }
 
-  blockquote:before, blockquote:after, q:before, q:after {
-    content: '';
-    content: none;
-  }
-
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
-
-  body {
-    -webkit-text-size-adjust: none;
-  }
-
-/* Box Model */
-
-  *, *:before, *:after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
 
 /* Basic */
-
-  body, input, select, textarea {
-    color: #fff;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 15pt;
-    font-weight: 300 !important;
-    letter-spacing: -0.025em;
-    line-height: 1.75em;
-  }
-
-  body {
-    background: #fff;
-    overflow: hidden;
-  }
-
-    body.loading * {
-      -moz-animation: none !important;
-      -webkit-animation: none !important;
-      -ms-animation: none !important;
-      animation: none !important;
-    }
 
   a {
     -moz-transition: border-color 0.2s ease-in-out;
@@ -164,11 +129,10 @@
     height: 100%;
     left: 0;
     opacity: 0;
-    position: fixed;
+    /*position: fixed;*/
     top: 0;
     width: 100%;
   }
-
 /* BG */
 
   #bg {
@@ -329,7 +293,7 @@
   #main {
     height: 100%;
     left: 0;
-    position: fixed;
+    /*position: fixed;*/
     text-align: center;
     top: 0;
     width: 100%;

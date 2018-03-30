@@ -1,5 +1,5 @@
 <template lang="pug">
-  #wrapper
+  full-bg-wrapper
     #bg
     #overlay
     #main
@@ -18,30 +18,23 @@
               a.icon.fa-dribble
                 span.label Dribbble
             li
-              a.icon-fa-github
+              a.icon.fa-github
                 span.label Github
             li
               a.icon.fa-envelope-o
                 span.label Email
 </template>
 
-<style>
-  html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-  }
+<script>
+  import FullBgWrapper from '@/components/FullBgWrapper';
+  
+  export default {
+    components: [ FullBgWrapper ],
+  };
+</script>
 
-  article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-    display: block;
-  }
+<style scoped>
 
-  body {
-    line-height: 1;
-  }
 
   ol, ul {
     list-style: none;
@@ -133,59 +126,7 @@
 
 /* Wrapper */
 
-  @-moz-keyframes wrapper {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-    }
-  }
-
-  @-webkit-keyframes wrapper {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-    }
-  }
-
-  @-ms-keyframes wrapper {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-    }
-  }
-
-  @keyframes wrapper {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-    }
-  }
-
-  #wrapper {
-    -moz-animation: wrapper 3s forwards;
-    -webkit-animation: wrapper 3s forwards;
-    -ms-animation: wrapper 3s forwards;
-    animation: wrapper 3s forwards;
-    height: 100%;
-    left: 0;
-    opacity: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-  }
-
+  
 /* BG */
 
   #bg {
@@ -346,7 +287,7 @@
   #main {
     height: 100%;
     left: 0;
-    position: fixed;
+    /*position: fixed;*/
     text-align: center;
     top: 0;
     width: 100%;
