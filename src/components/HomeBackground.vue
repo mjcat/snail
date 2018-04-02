@@ -78,7 +78,7 @@
     transform: translate3d(0,0,0);
   /* Set your background with this */
 
-    background: #348cb2 url("../assets/bg.jpg") bottom left;
+    background: #4E0569 url("../assets/New-York-City-3.png") bottom left;
     background-repeat: repeat-x;
     height: 100%;
     left: 0;
