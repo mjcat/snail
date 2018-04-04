@@ -1,10 +1,22 @@
 <template lang="pug">
-  #header
-    a#logo(href="/")
-      | VR Technologies
-    .btn.btn-primary
-      | Learn More
+  header#header
+    .container-fluid
+      .row
+        .col-md-2.col-xs-6
+          header-logo
+        .col-md-8
+        .col-md-2.col-xs-6
+          primary-button
 </template>
+
+<script>
+import PrimaryButton from '@/components/presentations/PrimaryButton';
+import HeaderLogo from '@/components/presentations/HeaderLogo';
+
+export default {
+  components: { PrimaryButton, HeaderLogo },
+};
+</script>
 
 <style scoped lang="stylus">
   #header
@@ -14,12 +26,5 @@
     z-index: 100
     border-bottom: 1px solid #ccc
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.25)
-    padding: 10px 60px
     top: 0
-
-  #logo
-    display: inline-block
-    line-height: 40px
-    font-size: 40px
-    font-weight: 50
 </style>

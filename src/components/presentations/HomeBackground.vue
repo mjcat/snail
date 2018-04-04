@@ -54,12 +54,7 @@
     -webkit-animation: wrapper 3s forwards;
     -ms-animation: wrapper 3s forwards;
     animation: wrapper 3s forwards;
-    height: 100%;
-    left: 0;
     opacity: 0;
-    /*position: fixed;*/
-    top: 0;
-    width: 100%;
   }
 /* BG */
 
@@ -78,7 +73,7 @@
     transform: translate3d(0,0,0);
   /* Set your background with this */
 
-    background: #4E0569 url("../assets/New-York-City-3.png") bottom left;
+    background: #4E0569 url("../../assets/New-York-City-3.png") bottom left;
     background-repeat: repeat-x;
     height: 100%;
     left: 0;
@@ -204,7 +199,7 @@
     -ms-animation: overlay 1.5s 1.5s forwards;
     animation: overlay 1.5s 1.5s forwards;
     background-attachment: fixed, fixed;
-    background-image: url("../assets/overlay-pattern.png"), url("../assets/overlay.svg");
+    background-image: url("../../assets/overlay-pattern.png"), url("../../assets/overlay.svg");
     background-position: top left, center center;
     background-repeat: repeat, no-repeat;
     background-size: auto, cover;

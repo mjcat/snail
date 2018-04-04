@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import HomeBackground from '@/components/HomeBackground';
-import HomeContent from '@/components/HomeContent';
+import HomeBackground from '@/components/presentations/HomeBackground';
+import HomeContent from '@/components/presentations/HomeContent';
 
 export default {
   components: { HomeBackground, HomeContent },
