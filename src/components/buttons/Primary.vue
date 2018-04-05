@@ -1,5 +1,5 @@
 <template lang="pug">
-  app-link.btn.btn-primary.primary(:link="link", :label="label")
+app-link.btn.btn-primary.primary(:link="link", :label="label")
 </template>
 
 <script>
@@ -12,7 +12,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  .primary
-    background-color: #4E0569
-    cursor: pointer
+@require '../../theme';
+
+.primary
+  background-color: $brand-accent
+  cursor: pointer
 </style>

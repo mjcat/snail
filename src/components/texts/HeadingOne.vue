@@ -21,16 +21,16 @@ export default {
   @require '../../theme'
 
   h1
-    font-size: 50px
-    font-weight: 500
-    line-height: 50px
+    font-size: $xl-font
+    font-weight: $slight-bolded
+    line-height: $xl-font
     color: $light-gray
-    margin-bottom: 20px
+    margin-bottom: $md-margin
 
   p
-    font-size: 20px
-    line-height: 25px
-    margin-bottom: 10px
+    font-size: $md-font
+    line-height: $lg-font
+    margin-bottom: $xs-margin
     color: $light-gray--opacity--70
     width: 70%
 </style>

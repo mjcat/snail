@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import PrimaryButton from '@/components/presentations/PrimaryButton';
-import HeaderLogo from '@/components/presentations/HeaderLogo';
+import PrimaryButton from '@/components/buttons/Primary';
+import HeaderLogo from '@/components/brands/Logo';
 
 export default {
   components: { PrimaryButton, HeaderLogo },

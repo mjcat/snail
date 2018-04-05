@@ -1,6 +1,8 @@
 <template lang="pug">
-  a(:href="link")
-    | {{ label }}
+a(:href="link")
+  template(v-if="icon")
+    i.fa.icon(:class="icon")
+  | {{ label }}
 </template>
 
 <script>
@@ -14,6 +16,14 @@ export default {
       type: String,
       default: 'javascript:void(0)',
     },
+    icon: String,
   },
 };
 </script>
+
+<style lang="stylus" scoped>
+@require '../../theme';
+
+.icon
+  margin-right: $xs-margin
+</style>

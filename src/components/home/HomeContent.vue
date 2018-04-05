@@ -2,26 +2,37 @@
   #main.container-fluid
     .home-content
       .row
-        .col-sm-6
+        .col-sm-6.align-self-center
           app-heading-one(title="Learn, Share, and Accelerate Career Growth" description="Get real-time career advice from When you can't avoid workplace politics, learn to crush it.")
         .col-sm-6
           .row
-            .col-sm-8
-              div(style="border: 1px solid black; width: 100%; height: 50px")
+            .col-sm-8.offset-sm-2
+              app-opaque-box
+                app-value-props
+                .text-center
+                  app-linkedin-button
 </template>
 
 <script>
-import AppHeadingOne from '@/components/presentations/HeadingOne';
+import AppHeadingOne from '@/components/texts/HeadingOne';
+import AppOpaqueBox from '@/components/home/OpaqueBox';
+import AppValueProps from '@/components/home/ValueProps';
+import AppLinkedinButton from '@/components/buttons/Linkedin';
 
 export default {
-  components: { AppHeadingOne },
+  components: {
+    AppHeadingOne,
+    AppOpaqueBox,
+    AppValueProps,
+    AppLinkedinButton,
+  },
 };
 </script>
 
 <style scoped>
-    ul {
-    list-style: none;
-  }
+.centered {
+  margin: auto;
+}
 
 /* Basic */
 
