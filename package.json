@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "snailed",
   "version": "1.0.0",
   "description": "A MEVN project",
   "author": "mjcat",
@@ -23,6 +23,9 @@
     "boom": "^7.2.0",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^2.0.0-rc.2",
+    "debug": "^3.1.0",
+    "dotenv": "^5.0.1",
+    "element-ui": "^2.3.3",
     "express": "^4.16.3",
     "font-awesome": "^4.7.0",
     "mongoose": "^5.0.11",

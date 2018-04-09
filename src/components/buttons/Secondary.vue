@@ -1,5 +1,5 @@
 <template lang="pug">
-  app-link.btn.btn-secondary(:link="link", :label="label")
+  app-link.btn.btn-outline-primary(:link="link", :label="label")
 </template>
 
 <script>

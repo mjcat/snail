@@ -3,7 +3,7 @@
     .home-content
       .row
         .col-sm-6.align-self-center
-          app-heading-one(title="Learn, Share, and Accelerate Career Growth" description="Get real-time career advice from When you can't avoid workplace politics, learn to crush it.")
+          app-heading-one(title="Learn, Share, and Accelerate Career Growth" subtitle="Get real-time career advice from When you can't avoid workplace politics, learn to crush it.")
         .col-sm-6
           .row
             .col-sm-8.offset-sm-2
