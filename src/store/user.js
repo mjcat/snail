@@ -3,7 +3,7 @@ export default {
     linkedInId: '',
     email: '',
     name: {
-      first: '',
+      first: 'Vicki',
       last: '',
     },
     nickname: '',

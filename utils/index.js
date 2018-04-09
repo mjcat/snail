@@ -25,6 +25,4 @@ const allRoles = [
   },
 ];
 
-const roleCodes = allRoles.map((role) => { return role.value });
-
-export { allRoles, roleCodes };
+export { allRoles };

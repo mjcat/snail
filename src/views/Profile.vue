@@ -2,26 +2,49 @@
 .container-fluid
   .row
     .col-sm-8
-      app-heading-two(title="Hi, Vicki!" subtitle="Let's check over your information.")
+      app-heading-two(
+        :title="'Hi ' + firstName + '!'"
+        subtitle="Let's check over your information."
+      )
   app-form-container
     .row
       .col-sm-4
-        app-text-input(label="Nickname" description="This is your display name when you post anonomously" :value="nickname" :update="updateNickname")
+        app-text-input(
+          label="Nickname"
+          description="This is your display name when you post anonomously"
+          :value="nickname"
+          :update="updateNickname"
+        )
       .col-sm-4
-        app-text-input(label="Current Company" description="All of your posts will be automatically hidden from your coworkers" :value="company" :update="updateCompany")
+        app-text-input(
+          label="Current Company"
+          description="All of your posts will be automatically hidden from your coworkers"
+          :value="company"
+          :update="updateCompany"
+        )
     .row
       .col-sm-4
         app-text-input(label="Current Role" :value="role" :update="updateRole")
       .col-sm-4
-        app-select-input(label="Role Type" description="describe me" :value="roleType" :update="updateRoleType" :options="roles")
+        app-select-input(
+          label="Role Type"
+          description="describe me"
+          :value="roleType"
+          :update="updateRoleType"
+          :options="allRoles"
+        )
     .row
-      .col
-        app-select-multiple-input(label="Companies to Exclude" :value="blacklistedCompanies" :update="updateBlacklistedCompanies" :options="['Google', 'Facebook', 'Apple', 'LinkedIn', 'AutoFi']")
+      .col-8
+        app-select-multiple-input(
+          label="Companies to Exclude"
+          :value="blacklistedCompanies"
+          :update="updateBlacklistedCompanies"
+          :options="['Google', 'Facebook', 'Apple', 'LinkedIn', 'AutoFi']"
+        )
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import { allRoles } from '../../utils';
 
 import AppHeadingTwo from '@/components/texts/HeadingTwo';
 
@@ -38,18 +61,15 @@ export default {
     AppFormContainer,
     AppSelectMultipleInput,
   },
-  data() {
-    return {
-      roles: allRoles,
-    };
-  },
   computed: {
     ...mapGetters([
+      'firstName',
       'nickname',
       'company',
       'role',
       'roleType',
-      'blacklistedCompanies'
+      'blacklistedCompanies',
+      'allRoles',
     ]),
   },
   methods: {
