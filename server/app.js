@@ -1,20 +1,34 @@
+const bluebird = require('bluebird');
+const bodyParser = require('body-parser');
+const debug = require('debug')('snailed:server');
 const express = require('express');
-const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
-const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const path = require('path');
 
-const book = require('./routes/book');
+const routes = require('./routes');
 const app = express();
+
+mongoose.Promise = bluebird;
+mongoose.connect(
+  process.env.DB_URL,
+  { promiseLibrary: bluebird }
+)
+  .then(() =>  debug('connection succesful'))
+  .catch(err => debug(err))
+;
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 
+// client
 app.set('view engine', 'html');
 app.use(express.static(path.join(__dirname, '../dist')));
-//app.use('/books', express.static(path.join(__dirname, '../dist')));
-app.use('/book', book);
+
+// api routes
+app.use('/api', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

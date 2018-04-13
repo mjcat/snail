@@ -1,17 +1,10 @@
 /**
  * Module dependencies.
  */
-
+require('dotenv/config'); // https://github.com/motdotla/dotenv/issues/89
 const app = require('./app');
 const debug = require('debug')('snailed:server');
 const http = require('http');
-
-/**
- * Load .env into process.env if this is not production
- */
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').load();
-}
 
 /**
  * Get port from environment and store in Express.
