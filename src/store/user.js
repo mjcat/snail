@@ -1,15 +1,15 @@
 export default {
   state: {
-    linkedInId: '',
-    email: '',
+    token: null,
+    tokenExpires: null,
     name: {
-      first: 'Vicki',
-      last: '',
+      first: null,
+      last: null,
     },
-    nickname: '',
-    company: '',
-    role: '',
-    roleType: '',
+    nickname: null,
+    company: null,
+    role: null,
+    roleType: null,
     blacklistedCompanies: [],
   },
   getters: {

@@ -13,6 +13,9 @@ import AppFooter from '@/views/Footer';
 export default {
   name: 'App',
   components: { AppHeader, AppFooter },
+  beforeCreate() {
+    
+  },
 };
 </script>
 
