@@ -1,6 +1,6 @@
 <template lang="pug">
-  home-background
-    home-content
+home-background
+  home-content
 </template>
 
 <script>

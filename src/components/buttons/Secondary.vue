@@ -1,5 +1,8 @@
 <template lang="pug">
-  app-link.btn.btn-outline-primary(:link="link", :label="label")
+app-link.btn.btn-outline-primary(
+  :link="link"
+  :label="label"
+)
 </template>
 
 <script>
@@ -10,5 +13,3 @@ export default {
   props: ['link', 'label'],
 };
 </script>
-
-<style lang="stylus" scoped></style>

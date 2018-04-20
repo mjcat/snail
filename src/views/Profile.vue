@@ -4,7 +4,7 @@
     .col-sm-8
       app-heading-two(
         :title="'Hi ' + firstName + '!'"
-        subtitle="Let's check over your information to make sure we give you the perfect experience."
+        subtitle="Let's check over your information to ensure the perfect experience."
       )
   app-form-container
     .row

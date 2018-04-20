@@ -1,8 +1,8 @@
 <template lang="pug">
-  #wrapper
-    #bg
-    #overlay
-    slot
+#wrapper
+  #bg
+  #overlay
+  slot
 </template>
 
 <style scoped>

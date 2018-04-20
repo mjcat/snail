@@ -1,9 +1,8 @@
-<template>
-  <div id="app">
-    <app-header></app-header>
-    <router-view />
-    <app-footer></app-footer>
-  </div>
+<template lang="pug">
+#app
+  app-header
+  router-view
+  app-footer
 </template>
 
 <script>
@@ -28,8 +27,8 @@ export default {
   color: #2c3e50;
 }*/
 
-  #app
-    margin-top: 60px
-    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif
+#app
+  margin-top: 60px
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif
 
 </style>

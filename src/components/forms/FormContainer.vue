@@ -1,4 +1,4 @@
 <template lang="pug">
-  el-form(label-position="top")
-    slot
+el-form(label-position="top")
+  slot
 </template>

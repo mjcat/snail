@@ -14,6 +14,6 @@ export default {
     },
     linkedInAuthUrl(state) {
       return `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${state.linkedInClientId}&redirect_uri=${window.location}/auth/linkedin`;
-    }
+    },
   },
 };

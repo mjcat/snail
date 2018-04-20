@@ -1,5 +1,5 @@
 <template lang="pug">
-  app-link#logo(:link="'/'", :label="'VR Tech'")
+app-link#logo(:link="'/'", :label="'VR Tech'")
 </template>
 
 <script>
@@ -11,9 +11,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  #logo
-    display: inline-block
-    line-height: 30px
-    font-size: 30px
-    font-weight: 50
+#logo
+  display: inline-block
+  line-height: 30px
+  font-size: 30px
+  font-weight: 50
 </style>

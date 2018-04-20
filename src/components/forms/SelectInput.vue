@@ -1,7 +1,17 @@
 <template lang="pug">
-  app-form-item(:label="label" :description="description")
-    el-select(placeholder="Choose one" :value="value" @change="update" clearable)
-      el-option(v-for="option in options" :key="option.value" :label="option.label" :value="option.value")
+app-form-item(:label="label" :description="description")
+  el-select(
+    placeholder="Choose one"
+    :value="value"
+    @change="update"
+    clearable
+  )
+    el-option(
+      v-for="option in options"
+      :key="option.value"
+      :label="option.label"
+      :value="option.value"
+    )
 </template>
 
 <script>

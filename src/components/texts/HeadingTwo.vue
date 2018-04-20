@@ -1,8 +1,8 @@
 <template lang="pug">
-  .heading-one
-    h2 {{ title }}
-    template(v-if="subtitle")
-      p {{ subtitle }}
+.heading-two
+  h2 {{ title }}
+  template(v-if="subtitle")
+    p {{ subtitle }}
 </template>
 
 <script>
@@ -18,18 +18,18 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  @require '../../theme'
+@require '../../theme'
 
-  h2
-    font-size: $lg-font
-    font-weight: $slight-bolded
-    line-height: $lg-font
-    color: $dark-gray
-    margin-bottom: $md-margin
+h2
+  font-size: $lg-font
+  font-weight: $slight-bolded
+  line-height: $lg-font
+  color: $dark-gray
+  margin-bottom: $md-margin
 
-  p
-    font-size: $sm-font
-    line-height: $md-font
-    margin-bottom: $xs-margin
-    color: $gray
+p
+  font-size: $sm-font
+  line-height: $md-font
+  margin-bottom: $xs-margin
+  color: $gray
 </style>

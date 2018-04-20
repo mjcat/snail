@@ -1,6 +1,6 @@
 <template lang="pug">
-  app-form-item(:label="label" :description="description")
-    el-input(placeholder="Please input" :value="value" @input="update" clearable)
+app-form-item(:label="label" :description="description")
+  el-input(placeholder="Please input" :value="value" @input="update" clearable)
 </template>
 
 <script>
