@@ -54,4 +54,10 @@ export default {
       state.blacklistedCompanies = values;
     },
   },
+  actions: {
+    preflight() {},
+    signup() {},
+    login() {},
+    logout() {},
+  },
 };

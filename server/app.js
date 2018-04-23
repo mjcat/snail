@@ -1,5 +1,6 @@
 const bluebird = require('bluebird');
 const bodyParser = require('body-parser');
+const history = require('connect-history-api-fallback');
 const debug = require('debug')('snailed:server');
 const express = require('express');
 const favicon = require('serve-favicon');
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 
 // client
+app.use(history()); // use HTML5 history API to get rid of # in SPA
 app.set('view engine', 'html');
 app.use(express.static(path.join(__dirname, '../dist')));
 

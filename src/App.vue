@@ -6,14 +6,26 @@
 </template>
 
 <script>
+import { mapMutations, mapActions } from 'vuex';
+
 import AppHeader from '@/views/Header';
 import AppFooter from '@/views/Footer';
 
 export default {
   name: 'App',
   components: { AppHeader, AppFooter },
-  beforeCreate() {
+  methods: {
+    ...mapMutations(['updateToken', 'updateTokenExpires'])
+    ...mapActions(['getPreflightData']),
+  },
+  created() {
+    const token = localStorage.getItem('token');
+    const tokenExpires = localStorage.getItem('tokenExpires');
     
+    if (token && tokenExpires) {
+      updateToken(token);
+      updateTokenExpires(tokenExpires);
+    }
   },
 };
 </script>

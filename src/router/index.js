@@ -6,7 +6,8 @@ import Profile from '@/views/Profile';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -18,5 +19,20 @@ export default new Router({
       name: 'Profile',
       component: Profile,
     },
+    {
+      path: '/auth/linkedin',
+      name: 'LinkedIn Authorization',
+      component: Profile, // temp
+      beforeEnter(to, from, next) {
+        // handle error, redirect
+        // handle login as needed, before redirecting to Profile/Dashboard
+      },
+    }
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  // check for expired token, login/logout action
+});
+
+export default router;

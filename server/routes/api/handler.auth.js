@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const debug = require('debug')('snailed:auth');
 const mongoose = require('mongoose');
 
@@ -5,6 +6,15 @@ const asyncMiddleware = require('./asyncMiddleware');
 const User = require('../../../models/User');
 
 const handler = {};
+
+handler.getPreflightData = (req, res) => {
+  debug('getPreflightData');
+
+  res.json({
+    linkedInClientId: process.env.LINKEDIN_CLIENT_ID,
+    authCsrfToken: crypto.randomBytes(10).toString('hex'),
+  });
+};
 
 handler.getUser = asyncMiddleware(async (req, res) => {
   debug('getUser');

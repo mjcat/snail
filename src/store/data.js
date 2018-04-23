@@ -13,7 +13,7 @@ export default {
       return state.allRoles.map(role => role.value);
     },
     linkedInAuthUrl(state) {
-      return `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${state.linkedInClientId}&redirect_uri=${window.location}/auth/linkedin`;
+      return `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${state.linkedInClientId}&redirect_uri=${window.location}auth/linkedin`;
     },
   },
 };
