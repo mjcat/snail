@@ -13,16 +13,19 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const auth = {};
 
-const generateToken = user => {
+/**
+ *  @param   user       object
+ *  @param   expiresIn  number of seconds
+ */
+const generateToken = (user, expiresIn) => {
   const payload = {
     user,
-    iss: 'autofi.com',
+    iss: 'snailed',
     sub: 'general',
     version: 'v1',
   };
 
-  const THREE_MONTHS = (60 * 60 * 24) * 30 * 3;
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: THREE_MONTHS });
+  return jwt.sign(payload, JWT_SECRET, { expiresIn });
 };
 
 /**
@@ -44,7 +47,7 @@ const generateToken = user => {
     publicProfileUrl: 'https://www.linkedin.com/in/vicki-guan-b8995427',
   }
  */
-const createOrUpdate = async (userData, { accessToken, expiresIn }) => {
+const createOrUpdate = async (userData, { accessToken, accessExpiresIn }) => {
   debug('create or update user');
 
   const linkedInId = userData.id;
@@ -60,7 +63,7 @@ const createOrUpdate = async (userData, { accessToken, expiresIn }) => {
   user.linkedIn.userId = linkedInId;
   user.linkedIn.profileUrl = userData.publicProfileUrl;
   user.linkedIn.accessToken = accessToken;
-  user.linkedIn.expiresTs = moment().add(expiresIn, 'seconds');
+  user.linkedIn.accessExpiresTs = moment().add(accessExpiresIn, 'seconds');
 
   let companyId, companyName;
   if (userData.positions.values && userData.positions.values.length) {
@@ -122,7 +125,7 @@ auth.login = async ({ accessCode, linkedInRedirectUrl }) => {
   }
 
   const accessToken = authRes.data.access_token;
-  const expiresIn = authRes.data.expires_in;
+  const accessExpiresIn = authRes.data.expires_in;
   const userRes = await axios.get('https://api.linkedin.com/v1/people/~:(id,first-name,last-name,positions,public-profile-url,email-address)?format=json', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -135,13 +138,15 @@ auth.login = async ({ accessCode, linkedInRedirectUrl }) => {
 
   const user = await createOrUpdate(userRes.data, {
     accessToken,
-    expiresIn,
+    accessExpiresIn,
   });
   if (!user) {
     throw new Error('User create or update failed');
   }
 
-  user.token = generateToken(user);
+  const THREE_MONTHS = (60 * 60 * 24) * 30 * 3;
+  user.token = generateToken(user, THREE_MONTHS);
+  user.expiresIn = THREE_MONTHS;
 
   return user;
 };

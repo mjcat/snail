@@ -43,3 +43,13 @@ npm test
 
 ## Vue.js
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Style
+Server:
+- async/await, use async wrapper on all routes
+- use Boom on req validation and catching errors from lib functions
+- keep try/catch on routes small
+- inside try block and all other lib functions, throw new Error
+- db should only be accessed in lib, not on routes
+
+Client:
