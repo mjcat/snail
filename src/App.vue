@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex';
+import { mapMutations } from 'vuex';
 
 import AppHeader from '@/views/Header';
 import AppFooter from '@/views/Footer';
@@ -15,16 +15,14 @@ export default {
   name: 'App',
   components: { AppHeader, AppFooter },
   methods: {
-    ...mapMutations(['updateToken', 'updateTokenExpires'])
-    ...mapActions(['getPreflightData']),
+    ...mapMutations(['updateToken']),
   },
   created() {
     const token = localStorage.getItem('token');
     const tokenExpires = localStorage.getItem('tokenExpires');
     
     if (token && tokenExpires) {
-      updateToken(token);
-      updateTokenExpires(tokenExpires);
+      updateToken({ token, tokenExpires });
     }
   },
 };

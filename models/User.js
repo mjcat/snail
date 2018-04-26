@@ -1,14 +1,10 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var UserSchema = new mongoose.Schema({
-  linkedInId: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   name: {
     first: {
@@ -19,16 +15,26 @@ var UserSchema = new mongoose.Schema({
     },
   },
   nickname: String,
-  // company: {
-  //   type: String,
-  // },
-  role: {
-    type: String,
+  linkedIn: {
+    userId: String,
+    profileUrl: String,
+    accessToken: String,
+    accessExpiresTs: Date,
+    company: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Company',
+    },
+    role: String,
+    roleType: {
+      type: String,
+      enum: ['tr', 'ic', 's', 'm', 'd', 'f'],
+    },
+    location: String,
+    blacklistedCompanies: [{
+      type: mongoose.Schema.ObjectId,
+      ref: 'Company',
+    }],
   },
-  roleType: {
-    type: String,
-  },
-  blacklistedCompanies: [],
 });
 
 module.exports = mongoose.model('User', UserSchema);

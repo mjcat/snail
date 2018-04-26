@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default {
   state: {
     token: null,
@@ -36,6 +38,9 @@ export default {
     nickname(state) {
       return state.nickname;
     },
+    isLoggedIn(state) {
+      return state.name.first && state.company && state.roleType;
+    },
   },
   mutations: {
     updateNickname(state, value) {
@@ -55,9 +60,21 @@ export default {
     },
   },
   actions: {
-    preflight() {},
-    signup() {},
-    login() {},
+    getUserData: async () => {},
+    login: async ({ commit, rootGetters }, { accessCode }) => {
+      console.log('login', accessCode)
+      if (!accessCode) {
+        return;
+      }
+
+      try {
+        const res = await axios.post('http://localhost:8081/api/auth/login', {
+          accessCode,
+        });
+      } catch (e) {
+        // noop
+      }
+    },
     logout() {},
   },
 };

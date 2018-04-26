@@ -1,6 +1,7 @@
 const bluebird = require('bluebird');
 const bodyParser = require('body-parser');
 const history = require('connect-history-api-fallback');
+const cors = require('cors');
 const debug = require('debug')('snailed:server');
 const express = require('express');
 const favicon = require('serve-favicon');
@@ -20,6 +21,9 @@ mongoose.connect(
   .catch(err => debug(err))
 ;
 
+app.use(cors(
+  { origin: 'http://localhost:8080' }
+));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
@@ -47,7 +51,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json(err);
 });
 
 module.exports = app;
