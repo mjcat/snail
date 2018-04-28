@@ -1,14 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const asyncMiddleware = require('./asyncMiddleware');
 
 const handlers = {};
 handlers.auth = require('./api/handler.auth');
+handlers.user = require('./api/handler.user');
 
+// public routes
 router.get('/auth/preflight', handlers.auth.getPreflightData);
-router.post('/auth/login', handlers.auth.login);
+router.post('/auth/login', asyncMiddleware(handlers.auth.login));
 
-router.post('/', (req, res, next) => {
-	res.json(req.body);
-});
+// check credentials for all routes below
+router.all('/*', asyncMiddleware(handlers.auth.checkLogin));
+
+// protected routes
+router.get('/user', asyncMiddleware(handlers.user.getData));
 
 module.exports = router;

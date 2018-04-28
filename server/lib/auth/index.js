@@ -29,12 +29,8 @@ const generateToken = (user, expiresIn) => {
 };
 
 /**
- * userData: {
-    emailAddress: 'yueyang.guan@gmail.com',
-    firstName: 'Vicki',
-    id: 'QN89bvi1HJ',
-    lastName: 'Guan',
-    positions: {
+ * @param   positionData    Array positions.values
+ * raw positions: {
       _total: 1, values: [{
         company: { name: 'AutoFi' },
         id: 1261683673,
@@ -44,7 +40,46 @@ const generateToken = (user, expiresIn) => {
         title: 'Engineering Manager',
       }]
     },
-    publicProfileUrl: 'https://www.linkedin.com/in/vicki-guan-b8995427',
+ */
+const parsePositionData = async positionData => {
+  if (!positionData || !positionData.length) {
+    return;
+  }
+
+  const currentPosition = positionData.find(p => p.isCurrent);
+  const role = currentPosition.title;
+  const location = currentPosition.location.name;
+  const companyName = currentPosition.company.name;
+  
+  let companyId;
+  if (companyName) {
+    let company = await Company.findOne({ 'linkedIn.name': companyName });
+    if (!company) {
+      company = new Company({ linkedIn: { name: companyName } });
+      await company.save();
+    }
+
+    companyId = company._id;
+  }
+
+  const parsed = {
+    role,
+    location,
+    companyName,
+    companyId,
+  };
+
+  return parsed;
+};
+
+/**
+ * userData: {
+    emailAddress: '*****@gmail.com',
+    firstName: 'V****',
+    id: 'QN89bvi1HJ',
+    lastName: 'G***',
+    positions: {...},
+    publicProfileUrl: 'https://www.linkedin.com/in/v****-g***-b8995427',
   }
  */
 const createOrUpdate = async (userData, { accessToken, accessExpiresIn }) => {
@@ -65,36 +100,23 @@ const createOrUpdate = async (userData, { accessToken, accessExpiresIn }) => {
   user.linkedIn.accessToken = accessToken;
   user.linkedIn.accessExpiresTs = moment().add(accessExpiresIn, 'seconds');
 
-  let companyId, companyName;
-  if (userData.positions.values && userData.positions.values.length) {
-    const currentPosition = userData.positions.values.find(p => p.isCurrent);
-    user.linkedIn.role = currentPosition.title;
-    user.linkedIn.location = currentPosition.location.name;
-
-    companyName = currentPosition.company.name;
-    if (companyName) {
-      let company = await Company.findOne({ 'linkedIn.name': companyName });
-      if (!company) {
-        company = new Company({ linkedIn: { name: companyName } });
-        await company.save();
-      }
-
-      user.linkedIn.company = company._id;
+  const currentPosition = await parsePositionData(userData.positions.values);
+  user.linkedIn.role = currentPosition.role;
+  user.linkedIn.location = currentPosition.location;
+  
+  if (user.linkedIn.company !== currentPosition.companyId) {
+    user.linkedIn.company = currentPosition.companyId;
+    
+    const isNewCompanyBlacklisted = user.linkedIn.blacklistedCompanies.some(c => c.equals(currentPosition.companyId));
+    if (!isNewCompanyBlacklisted) {
+      user.linkedIn.blacklistedCompanies.push(currentPosition.companyId);
     }
   }
 
   await user.save();
 
   let userResult = {
-    name: {
-      first: user.name.first,
-      last: user.name.last,
-    },
-    company: { id: companyId, name: companyName },
-    nickname: user.nickname,
-    role: user.linkedIn.role,
-    roleType: user.linkedIn.roleType,
-    blacklistedCompanies: user.linkedIn.blacklistedCompanies,
+    id: user._id,
   };
 
   return userResult;
@@ -121,7 +143,7 @@ auth.login = async ({ accessCode, linkedInRedirectUrl }) => {
   );
 
   if (!authRes || !authRes.data.access_token) {
-    throw new Error('No jwt token returned');
+    throw new Error('No access token returned');
   }
 
   const accessToken = authRes.data.access_token;
@@ -145,10 +167,10 @@ auth.login = async ({ accessCode, linkedInRedirectUrl }) => {
   }
 
   const THREE_MONTHS = (60 * 60 * 24) * 30 * 3;
-  user.token = generateToken(user, THREE_MONTHS);
-  user.expiresIn = THREE_MONTHS;
+  const token = generateToken(user, THREE_MONTHS);
+  const expiresIn = THREE_MONTHS;
 
-  return user;
+  return { token, expiresIn };
 };
 
 module.exports = auth;

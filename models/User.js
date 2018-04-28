@@ -33,6 +33,7 @@ const UserSchema = new mongoose.Schema({
     blacklistedCompanies: [{
       type: mongoose.Schema.ObjectId,
       ref: 'Company',
+      unique: true,
     }],
   },
 });
