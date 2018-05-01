@@ -3,7 +3,7 @@
   .row
     .col-sm-8
       app-heading-two(
-        :title="'Hi ' + firstName + '!'"
+        :title="'Hi ' + name.first + '!'"
         subtitle="Let's check over your information to ensure the perfect experience."
       )
   app-form-container
@@ -19,7 +19,7 @@
         app-text-input(
           label="Current Company"
           description="All of your posts will be automatically hidden from your coworkers"
-          :value="company"
+          :value="linkedIn.company"
           :update="updateCompany"
         )
     .row
@@ -29,7 +29,7 @@
         app-select-input(
           label="Role Type"
           description="describe me"
-          :value="roleType"
+          :value="linkedIn.roleType"
           :update="updateRoleType"
           :options="allRoles"
         )
@@ -37,14 +37,14 @@
       .col-8
         app-select-multiple-input(
           label="Companies to Exclude"
-          :value="blacklistedCompanies"
+          :value="linkedIn.blacklistedCompanies"
           :update="updateBlacklistedCompanies"
           :options="['Google', 'Facebook', 'Apple', 'LinkedIn', 'AutoFi']"
         )
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapMutations } from 'vuex';
 
 import AppHeadingTwo from '@/components/texts/HeadingTwo';
 
@@ -62,15 +62,16 @@ export default {
     AppSelectMultipleInput,
   },
   computed: {
-    ...mapGetters([
-      'firstName',
+    ...mapState([
+      'name.first',
+      'name.last',
       'nickname',
-      'company',
-      'role',
-      'roleType',
-      'blacklistedCompanies',
-      'allRoles',
+      'linkedIn.company',
+      'linkedIn.role',
+      'linkedIn.roleType',
+      'linkedIn.blacklistedCompanies',
     ]),
+    ...mapGetters(['allRoles']),
   },
   methods: {
     ...mapMutations([

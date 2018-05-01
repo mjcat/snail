@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import store from '../store';
+import store from '@/store';
 
 import Home from '@/views/Home';
 import Profile from '@/views/Profile';
@@ -42,14 +42,9 @@ const router = new Router({
 
         if (!error && accessCode) { // TODO csrfToken compare
           await store.dispatch('login', { accessCode });
-          
-          if (store.getters.validToken) {
-            await store.dispatch('getUser');
-            next({ name: 'Profile' });
-          }
         }
 
-        next(); // let beforeEach handle redirects
+        next({ name: 'Profile' }); // let beforeEach handle redirects
       },
     }
   ],
@@ -58,7 +53,7 @@ const router = new Router({
 router.beforeEach(async (to, from, next) => {
   console.log('vvv beforeEach', to, from)
   const routeRequiresAuth = to.matched.some(r => r.meta.requiresAuth);
-  
+
   if (!store.getters.validToken) {
     console.log('logout')
     store.dispatch('logout');
@@ -67,7 +62,7 @@ router.beforeEach(async (to, from, next) => {
     console.log('getUser')
     await store.dispatch('getUser');
   }
-  
+
   if (store.getters.isLoggedIn) { 
     console.log('logged in!')
     if (routeRequiresAuth) {

@@ -18,27 +18,26 @@ export default {
   },
   getters: {
     isLoggedIn(state) {
-      return state.name.first && state.company && state.roleType;
+      return state.name.first && state.linkedIn.role;
     },
     validToken(state) {
       const now = new Date();
       const token = state.token;
       const tokenExpires = state.tokenExpires;
-      
-      return token && tokenExpires && now.getTime() > tokenExpires.getTime();
+
+      return token && tokenExpires && now.getTime() <= tokenExpires.getTime();
     },
   },
   mutations: {
-    updateToken(state, value) {
-      state.token = value;
+    updateToken(state, { token, tokenExpires }) {
+      state.token = token;
+      state.tokenExpires = tokenExpires;
     },
-    updateTokenExpires(state, seconds) {
-      const now = new Date(); 
-      state.tokenExpires = new Date(now.getTime() + 1000 * seconds);
+    updateFirstName(state, value) {
+      state.name.first = value;
     },
-    updateName(state, { first, last }) {
-      state.name.first = first;
-      state.name.last = last;
+    updateLastName(state, value) {
+      state.name.last = value;
     },
     updateNickname(state, value) {
       state.nickname = value;
@@ -64,11 +63,18 @@ export default {
       }
 
       try {
-        const userData = await axios.get('http://localhost:8081/api/user', {
-          token,
+        const res = await axios.get('http://localhost:8081/api/user', {
+          headers: { Authorization: `Bearer ${token}` },
         });
 
-        console.log(userData);
+        const userData = res.data.userData;
+        commit('updateFirstName', userData.name.first);
+        commit('updateLastName', userData.name.last);
+        commit('updateNickname', userData.nickname);
+        commit('updateCompany', userData.linkedIn.company);
+        commit('updateRole', userData.linkedIn.role);
+        commit('updateRoleType', userData.linkedIn.roleType);
+        commit('updateBlacklistedCompanies', userData.linkedIn.blacklistedCompanies);
       } catch (e) {
         // noop
       }
@@ -83,16 +89,23 @@ export default {
           accessCode,
         });
 
-        commit('updateToken', res.data.user.token);
-        commit('updateTokenExpires', res.data.user.expiresIn);
+        const token = res.data.user.token;
+        const now = new Date();
+        const milsecs = res.data.user.expiresIn * 1000;
+        const tokenExpires = milsecs ? new Date(now.getTime() + milsecs) : null;
+
+        localStorage.setItem('token', token);
+        localStorage.setItem('tokenExpires', tokenExpires);
+
+        commit('updateToken', { token, tokenExpires });
       } catch (e) {
         // noop
       }
     },
     logout: ({ commit }) => {
-      commit('updateToken', null);
-      commit('updateTokenExpires', null);
-      commit('updateName', {});
+      commit('updateToken', {});
+      commit('updateFirstName', null);
+      commit('updateLastName', null);
       commit('updateNickname', null);
       commit('updateCompany', null);
       commit('updateRole', null);

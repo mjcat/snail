@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const axios = require('axios');
 const debug = require('debug')('snailed:lib:auth');
-const jwt = require('jsonwebtoken');
 const moment = require('moment');
 const mongoose = require('mongoose');
 const querystring = require('querystring');
@@ -9,24 +8,7 @@ const querystring = require('querystring');
 const Company = require('../../../models/Company');
 const User = require('../../../models/User');
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
 const auth = {};
-
-/**
- *  @param   user       object
- *  @param   expiresIn  number of seconds
- */
-const generateToken = (user, expiresIn) => {
-  const payload = {
-    user,
-    iss: 'snailed',
-    sub: 'general',
-    version: 'v1',
-  };
-
-  return jwt.sign(payload, JWT_SECRET, { expiresIn });
-};
 
 /**
  * @param   positionData    Array positions.values
@@ -162,15 +144,8 @@ auth.login = async ({ accessCode, linkedInRedirectUrl }) => {
     accessToken,
     accessExpiresIn,
   });
-  if (!user) {
-    throw new Error('User create or update failed');
-  }
 
-  const THREE_MONTHS = (60 * 60 * 24) * 30 * 3;
-  const token = generateToken(user, THREE_MONTHS);
-  const expiresIn = THREE_MONTHS;
-
-  return { token, expiresIn };
+  return user;
 };
 
 module.exports = auth;

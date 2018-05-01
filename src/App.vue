@@ -18,11 +18,13 @@ export default {
     ...mapMutations(['updateToken']),
   },
   created() {
+    console.log('app created')
     const token = localStorage.getItem('token');
-    const tokenExpires = localStorage.getItem('tokenExpires');
-    
-    if (token && tokenExpires) {
-      updateToken({ token, tokenExpires });
+    const expires = localStorage.getItem('tokenExpires');
+
+    if (token && expires) {
+      const tokenExpires = new Date(expires);
+      this.updateToken({ token, tokenExpires });
     }
   },
 };

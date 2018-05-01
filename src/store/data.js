@@ -38,7 +38,7 @@ export default {
         if (res.status === 200 && res.data) {
           commit('updatePreflight', res.data);
         }
-      } catch(e) {
+      } catch (e) {
         // noop
       }
     },

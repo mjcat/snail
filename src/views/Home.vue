@@ -4,7 +4,6 @@ home-background
 </template>
 
 <script>
-console.log('home loaded')
 import HomeBackground from '@/components/home/HomeBackground';
 import HomeContent from '@/components/home/HomeContent';
 

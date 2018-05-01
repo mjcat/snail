@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
 import Vue from 'vue';
-import axios from 'axios';
+// import axios from 'axios';
 
 // import BootstrapVue from 'bootstrap-vue';
 // import 'bootstrap-vue/dist/bootstrap-vue.css';

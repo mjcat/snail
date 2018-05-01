@@ -11,7 +11,7 @@ user.getData = async userId => {
     throw new Error('No user id');
   }
 
-  const user = User.findById(userId).populate('linkedIn.company').populate('linkedIn.blacklistedCompanies');
+  const user = await User.findById(userId).populate('linkedIn.company').populate('linkedIn.blacklistedCompanies');
   if (!user) {
     throw new Error('No user found');
   }
@@ -29,7 +29,7 @@ user.getData = async userId => {
     linkedIn: {
       company: {
         id: _.get(user, 'linkedIn.company._id'),
-        name: _.get(user, 'linkedIn.company.name'),
+        name: _.get(user, 'linkedIn.company.linkedIn.name'),
       },
       role: _.get(user, 'linkedIn.role'),
       roleType: _.get(user, 'linkedIn.roleType'),
