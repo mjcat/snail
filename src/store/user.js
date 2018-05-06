@@ -74,7 +74,7 @@ export default {
       }
 
       try {
-        const res = await axios.get('http://localhost:8081/api/user', {
+        const res = await axios.get('/api/user', {
           headers: { 'Authorization': `Bearer ${token}` },
         });
 
@@ -97,8 +97,7 @@ export default {
       }
 
       try {
-        const res = await axios.post(
-          'http://localhost:8081/api/user',
+        const res = await axios.post('/api/user',
           {
             userData: {
               firstName: state.name.first,
@@ -127,7 +126,7 @@ export default {
       }
 
       try {
-        const res = await axios.post('http://localhost:8081/api/auth/login', {
+        const res = await axios.post('/api/auth/login', {
           accessCode,
         });
 

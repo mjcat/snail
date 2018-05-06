@@ -35,6 +35,8 @@ npm test
 
 [Adding Pug and Stylus Loaders](https://forum.vuejs.org/t/setting-up-stylus-and-pug-in-webpack-template/1839/2)
 
+[Webpack proxy to support local hot reloading client and server on a different port](https://medium.com/@FrancescoZ/how-to-setup-vue-dev-server-with-a-running-web-server-7532c53b3198)
+
 [Considered this setup as well but not as clean](https://medium.com/@anaida07/mevn-stack-application-part-1-3a27b61dcae0)
 
 [Boilerplate with Auth](https://github.com/icebob/vue-express-mongo-boilerplate)

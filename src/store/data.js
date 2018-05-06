@@ -34,7 +34,7 @@ export default {
   actions: {
     preflight: async ({ commit }) => {
       try {
-        const res = await axios.get('http://localhost:8081/api/auth/preflight');
+        const res = await axios.get('/api/auth/preflight');
         if (res.status === 200 && res.data) {
           commit('updatePreflight', res.data);
         }
