@@ -3,48 +3,68 @@
   .row
     .col-sm-8
       app-heading-two(
-        :title="'Hi ' + name.first + '!'"
+        :title="'Hi ' + firstName + '!'"
         subtitle="Let's check over your information to ensure the perfect experience."
       )
-  app-form-container
+  app-form-container(
+    formName="profile"
+    submitLabel="Save"
+    submitAction="updateUser"
+    cancelLabel="Cancel"
+    cancelLink="/dashboard"
+    :formData="formData"
+    :rules="rules"
+  )
     .row
       .col-sm-4
         app-text-input(
           label="Nickname"
           description="This is your display name when you post anonomously"
+          prop="nickname"
           :value="nickname"
           :update="updateNickname"
         )
       .col-sm-4
         app-text-input(
           label="Current Company"
-          description="All of your posts will be automatically hidden from your coworkers"
-          :value="linkedIn.company"
+          description="Your posts are by default hidden from your coworkers"
+          prop="companyName"
+          :value="companyName"
           :update="updateCompany"
         )
     .row
       .col-sm-4
-        app-text-input(label="Current Role" :value="role" :update="updateRole")
+        app-text-input(
+          label="Current Role"
+          description=""
+          prop="role"
+          :value="role"
+          :update="updateRole"
+        )
       .col-sm-4
         app-select-input(
           label="Role Type"
-          description="describe me"
-          :value="linkedIn.roleType"
+          description="We prioritize advice from professionals at or above your current level"
+          prop="roleType"
+          :value="roleType"
           :update="updateRoleType"
           :options="allRoles"
         )
     .row
       .col-8
         app-select-multiple-input(
-          label="Companies to Exclude"
-          :value="linkedIn.blacklistedCompanies"
+          label="Companies to Block"
+          description="Any persons associated with these companies on LinkedIn will not be able to see your posts. This includes current employees, executives, and board members"
+          :value="blacklistedCompanies"
           :update="updateBlacklistedCompanies"
-          :options="['Google', 'Facebook', 'Apple', 'LinkedIn', 'AutoFi']"
+          getSuggestionsApi="/api/user/getCompanySuggestions"
         )
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
+
+import { formValidation } from '@/components/mixins';
 
 import AppHeadingTwo from '@/components/texts/HeadingTwo';
 
@@ -54,6 +74,7 @@ import AppSelectInput from '@/components/forms/SelectInput';
 import AppSelectMultipleInput from '@/components/forms/SelectMultipleInput';
 
 export default {
+  mixins: [formValidation],
   components: {
     AppHeadingTwo,
     AppTextInput,
@@ -61,17 +82,53 @@ export default {
     AppFormContainer,
     AppSelectMultipleInput,
   },
+  data() {
+    return {
+      gettersToValidate: ['nickname', 'companyName', 'role', 'roleType'],
+      rules: {
+        nickname: [
+          {
+            required: true,
+            message: 'Please pick a nickname',
+            trigger: ['blur', 'change'],
+          },
+        ],
+        companyName: [
+          {
+            required: true,
+            message: 'Please enter your current company',
+            trigger: ['blur', 'change'],
+          },
+        ],
+        role: [
+          {
+            required: true,
+            message: 'Please enter your role',
+            trigger: ['blur', 'change'],
+          },
+        ],
+        roleType: [
+          {
+            required: true,
+            message: 'Please select one',
+            trigger: 'blur',
+          },
+        ],
+      }
+    };
+  },
   computed: {
-    ...mapState([
-      'name.first',
-      'name.last',
+    ...mapGetters([
+      'allRoles',
+      'firstName',
+      'lastName',
       'nickname',
-      'linkedIn.company',
-      'linkedIn.role',
-      'linkedIn.roleType',
-      'linkedIn.blacklistedCompanies',
+      'companyName',
+      'companyId',
+      'role',
+      'roleType',
+      'blacklistedCompanies',
     ]),
-    ...mapGetters(['allRoles']),
   },
   methods: {
     ...mapMutations([

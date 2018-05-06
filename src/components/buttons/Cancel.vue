@@ -1,5 +1,5 @@
 <template lang="pug">
-app-link.btn.btn-primary.primary(
+app-link.btn.btn-outline-secondary(
   :link="link"
   :label="label"
   :onClickHandler="onClickHandler"
@@ -18,8 +18,11 @@ export default {
 <style lang="stylus" scoped>
 @require '../../theme';
 
-.primary
-  background-color: $brand-accent
-  border-color: $brand-accent
+.cancel
+  color: $brand-light
+  border-color: $brand-light
   cursor: pointer
+  &:hover
+    color: $light-gray
+    background-color: $brand-light
 </style>

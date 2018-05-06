@@ -4,6 +4,7 @@ app-link.btn.btn-primary.linkedin(
   label="Get started with LinkedIn"
   icon="fa-linkedin-square"
 )
+  i.fa.icon.fa-linkedin-square
 </template>
 
 <script>
@@ -23,4 +24,7 @@ export default {
 
 .linkedin
   background-color: $linkedin
+
+.icon
+  margin-right: $xs-margin
 </style>

@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const router = express.Router();
 const asyncMiddleware = require('./asyncMiddleware');
@@ -15,5 +17,7 @@ router.all('/*', asyncMiddleware(handlers.auth.checkLogin));
 
 // protected routes
 router.get('/user', asyncMiddleware(handlers.user.getData));
+router.get('/user/getCompanySuggestions', asyncMiddleware(handlers.user.getCompanySuggestions));
+router.post('/user', asyncMiddleware(handlers.user.update));
 
 module.exports = router;

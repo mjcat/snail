@@ -54,6 +54,18 @@ router.beforeEach(async (to, from, next) => {
   console.log('vvv beforeEach', to, from)
   const routeRequiresAuth = to.matched.some(r => r.meta.requiresAuth);
 
+  if (store.getters.needsToken) {
+    console.log('try retrieve token from localStorage')
+    const token = localStorage.getItem('token');
+    const expires = localStorage.getItem('tokenExpires');
+
+    if (token && expires) {
+      console.log('saving old token data')
+      const tokenExpires = new Date(expires);
+      store.dispatch('updateToken', { token, tokenExpires });
+    }
+  }
+
   if (!store.getters.validToken) {
     console.log('logout')
     store.dispatch('logout');
@@ -65,18 +77,10 @@ router.beforeEach(async (to, from, next) => {
 
   if (store.getters.isLoggedIn) { 
     console.log('logged in!')
-    if (routeRequiresAuth) {
-      next();
-    } else {
-      next({ name: 'Profile' }); // TODO redirect to dashboard
-    }
+    routeRequiresAuth ? next() : next({ name: 'Profile' }); // TODO redirect to dashboard
   } else {
     console.log('logged out')
-    if (routeRequiresAuth) {
-      next({ name: 'Home' });
-    } else {
-      next();
-    }
+    routeRequiresAuth ? next({ name: 'Home' }) : next();
   }
 });
 

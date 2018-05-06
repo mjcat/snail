@@ -1,29 +1,39 @@
 <template lang="pug">
-a(:href="link")
-  template(v-if="icon")
-    i.fa.icon(:class="icon")
+a(
+  :href="link"
+  @click="onClick"
+  :class="{ disabled: disabled }"
+)
+  //- TODO tab index on disabled buttons
+  //- slot is for icon
+  slot
   | {{ label }}
 </template>
 
 <script>
 export default {
   props: {
-    label: {
-      type: String,
-      default: 'Learn More',
-    },
+    label: String,
     link: {
       type: String,
       default: 'javascript:void(0)',
     },
-    icon: String,
+    onClickHandler: {
+      type: Function,
+      required: false,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  methods: {
+    onClick(e) {
+      if (this.onClickHandler) {
+        e.preventDefault();
+        this.onClickHandler();
+      }
+    }
   },
 };
 </script>
-
-<style lang="stylus" scoped>
-@require '../../theme';
-
-.icon
-  margin-right: $xs-margin
-</style>

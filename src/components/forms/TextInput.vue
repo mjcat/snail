@@ -1,6 +1,16 @@
 <template lang="pug">
-app-form-item(:label="label" :description="description")
-  el-input(placeholder="Please input" :value="value" @input="update" clearable)
+app-form-item(
+  :label="label"
+  :description="description"
+  :prop="prop"
+  :rules="rules"
+)
+  el-input(
+    placeholder="Please input"
+    :value="value"
+    @input="update"
+    clearable
+  )
 </template>
 
 <script>
@@ -13,11 +23,19 @@ export default {
     description: String,
     value: {
       type: String,
-      required: true,
+      default: '',
     },
     update: {
       type: Function,
       required: true,
+    },
+    rules: {
+      type: Array,
+      required: false,
+    },
+    prop: { // For form validation
+      type: String,
+      required: false,
     },
   },
 };

@@ -14,19 +14,6 @@ import AppFooter from '@/views/Footer';
 export default {
   name: 'App',
   components: { AppHeader, AppFooter },
-  methods: {
-    ...mapMutations(['updateToken']),
-  },
-  created() {
-    console.log('app created')
-    const token = localStorage.getItem('token');
-    const expires = localStorage.getItem('tokenExpires');
-
-    if (token && expires) {
-      const tokenExpires = new Date(expires);
-      this.updateToken({ token, tokenExpires });
-    }
-  },
 };
 </script>
 

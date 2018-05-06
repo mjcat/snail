@@ -1,33 +1,40 @@
 <template lang="pug">
-app-form-item.multi-select(:label="label" :description="description")
-  el-select(
-    placeholder="Choose a few"
+app-form-item.multi-select(
+  :label="label"
+  :description="description"
+  :prop="prop"
+)
+  app-multi-select(
     :value="value"
-    @change="update"
-    multiple filterable allow-create default-first-option
+    :update="update"
+    :getSuggestionsApi="getSuggestionsApi"
   )
-    el-option(v-for="option in options" :key="option" :label="option" :value="option")
 </template>
 
 <script>
 import AppFormItem from '@/components/forms/FormItem';
+import AppMultiSelect from '@/components/containers/MultiSelect';
 
 export default {
-  components: { AppFormItem },
+  components: { AppFormItem, AppMultiSelect },
   props: {
     label: String,
     description: String,
     value: {
       type: Array,
-      required: true,
+      default: [],
     },
     update: {
       type: Function,
       required: true,
     },
-    options: {
-      type: Array,
+    getSuggestionsApi: {
+      type: String,
       required: true,
+    },
+    prop: { // For form validation
+      type: String,
+      required: false,
     },
   },
 };

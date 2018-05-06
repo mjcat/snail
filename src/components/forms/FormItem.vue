@@ -1,5 +1,9 @@
 <template lang="pug">
-el-form-item.large-text(:label="label" :required="required")
+el-form-item.large-text(
+  :label="label"
+  :prop="prop"
+  :rules="rules"
+)
   template(v-if="description")
     p.description {{ description }}
   slot
@@ -10,9 +14,13 @@ export default {
   props: {
     label: String,
     description: String,
-    required: {
-      type: Boolean,
-      default: false,
+    rules: {
+      type: Array,
+      required: false,
+    },
+    prop: { // For form validation
+      type: String,
+      required: false,
     },
   },
 };

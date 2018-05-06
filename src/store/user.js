@@ -27,6 +27,17 @@ export default {
 
       return token && tokenExpires && now.getTime() <= tokenExpires.getTime();
     },
+    needsToken(state) {
+      return !state.token || !state.tokenExpires;
+    },
+    firstName(state) { return state.name.first; },
+    lastName(state) { return state.name.last; },
+    nickname(state) { return state.nickname; },
+    companyName(state) { return state.linkedIn.company },
+    role(state) { return state.linkedIn.role; },
+    roleType(state) { return state.linkedIn.roleType; },
+    blacklistedCompanies(state) { return state.linkedIn.blacklistedCompanies; },
+    token(state) { return state.token; },
   },
   mutations: {
     updateToken(state, { token, tokenExpires }) {
@@ -64,17 +75,48 @@ export default {
 
       try {
         const res = await axios.get('http://localhost:8081/api/user', {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { 'Authorization': `Bearer ${token}` },
         });
 
         const userData = res.data.userData;
-        commit('updateFirstName', userData.name.first);
-        commit('updateLastName', userData.name.last);
-        commit('updateNickname', userData.nickname);
+        commit('updateFirstName', userData.name.first || '');
+        commit('updateLastName', userData.name.last || '');
+        commit('updateNickname', userData.nickname || '');
         commit('updateCompany', userData.linkedIn.company);
-        commit('updateRole', userData.linkedIn.role);
-        commit('updateRoleType', userData.linkedIn.roleType);
+        commit('updateRole', userData.linkedIn.role || '');
+        commit('updateRoleType', userData.linkedIn.roleType || '');
         commit('updateBlacklistedCompanies', userData.linkedIn.blacklistedCompanies);
+      } catch (e) {
+        // noop
+      }
+    },
+    async updateUser({ commit, state, dispatch }) {
+      const token = state.token;
+      if (!token) {
+        return;
+      }
+
+      try {
+        const res = await axios.post(
+          'http://localhost:8081/api/user',
+          {
+            userData: {
+              firstName: state.name.first,
+              lastName: state.name.last,
+              role: state.linkedIn.role,
+              roleType: state.linkedIn.roleType,
+              nickname: state.nickname,
+              blacklistedCompanies: state.linkedIn.blacklistedCompanies,
+            },
+          },
+          {
+            headers: { 'Authorization': `Bearer ${token}` },
+          }
+        );
+
+        if (res.status === 200) {
+          await dispatch('getUser');
+        }
       } catch (e) {
         // noop
       }
@@ -111,6 +153,9 @@ export default {
       commit('updateRole', null);
       commit('updateRoleType', null);
       commit('updateBlacklistedCompanies', []);
+    },
+    updateToken: ({ commit }, { token, tokenExpires }) => {
+      commit('updateToken', { token, tokenExpires });
     },
   },
 };

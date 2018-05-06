@@ -1,3 +1,5 @@
+'use strict';
+
 const Boom = require('boom');
 const crypto = require('crypto');
 const debug = require('debug')('snailed:auth');

@@ -12,6 +12,7 @@
           .col-sm-8.offset-sm-2
             app-opaque-box
               app-value-props
+              //- TODO better implementation of .text-center to stretch button
               .text-center
                 app-linkedin-button
 </template>

@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const axios = require('axios');
 const debug = require('debug')('snailed:lib:auth');
@@ -35,12 +37,17 @@ const parsePositionData = async positionData => {
   
   let companyId;
   if (companyName) {
-    let company = await Company.findOne({ 'linkedIn.name': companyName });
+    let company = await Company.findOne({ 'name': companyName });
     if (!company) {
-      company = new Company({ linkedIn: { name: companyName } });
+      company = new Company({
+        name: companyName,
+        linkedIn: {
+          companyId: currentPosition.company.id
+        },
+      });
       await company.save();
     }
-
+    // TODO save new company.id that comes back from linkedIn
     companyId = company._id;
   }
 
@@ -97,9 +104,7 @@ const createOrUpdate = async (userData, { accessToken, accessExpiresIn }) => {
 
   await user.save();
 
-  let userResult = {
-    id: user._id,
-  };
+  const userResult = { id: user._id };
 
   return userResult;
 };

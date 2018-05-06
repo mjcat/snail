@@ -1,3 +1,5 @@
+'use strict';
+
 const Boom = require('boom');
 
 const asyncMiddleware = fn => (req, res, next) => {

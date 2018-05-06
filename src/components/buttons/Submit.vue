@@ -1,24 +1,24 @@
 <template lang="pug">
-app-link.btn.btn-outline-primary.secondary(
-  :link="link"
+app-submit.btn.btn-outline-primary.submit(
   :label="label"
-  :onClickHandler="onClickHandler"
+  :action="action"
+  :validateForm="validateForm"
 )
 </template>
 
 <script>
-import AppLink from '@/components/containers/Link';
+import AppSubmit from '@/components/containers/Submit';
 
 export default {
-  components: { AppLink },
-  props: ['link', 'label', 'onClickHandler'],
+  components: { AppSubmit },
+  props: ['label', 'action', 'validateForm'],
 };
 </script>
 
 <style lang="stylus" scoped>
 @require '../../theme';
 
-.secondary
+.submit
   color: $brand-light
   border-color: $brand-light
   cursor: pointer

@@ -1,5 +1,9 @@
 <template lang="pug">
-app-form-item(:label="label" :description="description")
+app-form-item(
+  :label="label"
+  :description="description"
+  :prop="prop"
+)
   el-select(
     placeholder="Choose one"
     :value="value"
@@ -24,15 +28,19 @@ export default {
     description: String,
     value: {
       type: String,
-      required: true,
+      default: '',
     },
     update: {
       type: Function,
       required: true,
     },
     options: {
-      type: Array,
+      type: Array, // of objects { label, value }
       required: true,
+    },
+    prop: { // For form validation
+      type: String,
+      required: false,
     },
   },
 };

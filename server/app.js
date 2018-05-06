@@ -1,3 +1,5 @@
+'use strict';
+
 const bluebird = require('bluebird');
 const bodyParser = require('body-parser');
 const history = require('connect-history-api-fallback');
