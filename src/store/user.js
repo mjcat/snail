@@ -15,6 +15,9 @@ export default {
       roleType: null,
       blacklistedCompanies: [],
     },
+    actionStatus: {
+      updateUser: null,
+    },
   },
   getters: {
     isLoggedIn(state) {
@@ -38,6 +41,7 @@ export default {
     roleType(state) { return state.linkedIn.roleType; },
     blacklistedCompanies(state) { return state.linkedIn.blacklistedCompanies; },
     token(state) { return state.token; },
+    updateUserStatus(state) { return state.actionStatus.updateUser; },
   },
   mutations: {
     updateToken(state, { token, tokenExpires }) {
@@ -60,10 +64,13 @@ export default {
       state.linkedIn.role = value;
     },
     updateRoleType(state, value) {
-      state.linkedIn.roleType = value;
+      state.linkedIn.roleType = value || 'ic';
     },
     updateBlacklistedCompanies(state, values) {
       state.linkedIn.blacklistedCompanies = values;
+    },
+    setUpdateUserStatus(state, value) {
+      state.actionStatus.updateUser = value;
     },
   },
   actions: {
@@ -91,33 +98,38 @@ export default {
       }
     },
     async updateUser({ commit, state, dispatch }) {
+      commit('setUpdateUserStatus', null);
+
       const token = state.token;
       if (!token) {
         return;
       }
 
       try {
-        const res = await axios.post('/api/user',
-          {
-            userData: {
-              firstName: state.name.first,
-              lastName: state.name.last,
-              role: state.linkedIn.role,
-              roleType: state.linkedIn.roleType,
-              nickname: state.nickname,
-              blacklistedCompanies: state.linkedIn.blacklistedCompanies,
-            },
-          },
-          {
-            headers: { 'Authorization': `Bearer ${token}` },
-          }
-        );
+        const data = {};
+        data.userData = {
+          firstName: state.name.first,
+          lastName: state.name.last,
+          role: state.linkedIn.role,
+          roleType: state.linkedIn.roleType,
+          nickname: state.nickname,
+          blacklistedCompanies: state.linkedIn.blacklistedCompanies,
+        };
+
+        const options = {};
+        options.headers = { 'Authorization': `Bearer ${token}` };
+
+        const res = await axios.post('/api/user', data, options);
 
         if (res.status === 200) {
+          commit('setUpdateUserStatus', 'SUCCESS');
+
           await dispatch('getUser');
+        } else {
+          commit('setUpdateUserStatus', 'ERROR');
         }
       } catch (e) {
-        // noop
+        commit('setUpdateUserStatus', 'ERROR');
       }
     },
     async login({ commit }, { accessCode }) {

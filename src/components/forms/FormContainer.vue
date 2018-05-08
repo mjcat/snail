@@ -9,12 +9,15 @@ el-form(
   slot
   .row
     .col
-      app-submit-button(
+      app-submit-button.inline(
         :label="submitLabel"
         :action="submitAction"
+        :link="submitLink"
         :validateForm="validate"
+        :successMessage="successMessage"
+        :errorMessage="errorMessage"
       )
-      app-cancel-button(
+      app-cancel-button.inline(
         :label="cancelLabel"
         :link="cancelLink"
       )
@@ -40,11 +43,16 @@ export default {
       required: false,
     },
     submitLabel: String,
-    submitLink: null,
+    submitLink: {
+      type: String,
+      required: false,
+    },
     submitAction: {
       type: String,
-      default: '',
+      required: false,
     },
+    successMessage: String,
+    errorMessage: String,
     // onSubmitHandler: null,
     cancelLabel: String,
     cancelLink: null,
@@ -65,3 +73,10 @@ export default {
   },
 };
 </script>
+
+<style lang="stylus" scoped>
+@require '../../theme';
+
+.inline
+  margin-right: $xs-margin
+</style>

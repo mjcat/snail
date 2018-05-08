@@ -35,12 +35,15 @@ const router = new Router({
       component: Profile, // temp
       meta: { requiresAuth: false },
       async beforeEnter(to, from, next) {
-        console.log('beforeEnter auth')
         const returnedCsrfToken = to.query.state;
         const error = to.query.error;
         const accessCode = to.query.code;
 
-        if (!error && accessCode) { // TODO csrfToken compare
+        const csrfToken = localStorage.getItem('csrfToken');
+        localStorage.removeItem('csrfToken');
+        const csrfSafe = returnedCsrfToken && (!csrfToken || csrfToken === returnedCsrfToken);
+
+        if (!error && accessCode && csrfSafe) {
           await store.dispatch('login', { accessCode });
         }
 
@@ -51,35 +54,28 @@ const router = new Router({
 });
 
 router.beforeEach(async (to, from, next) => {
-  console.log('vvv beforeEach', to, from)
   const routeRequiresAuth = to.matched.some(r => r.meta.requiresAuth);
 
   if (store.getters.needsToken) {
-    console.log('try retrieve token from localStorage')
     const token = localStorage.getItem('token');
     const expires = localStorage.getItem('tokenExpires');
 
     if (token && expires) {
-      console.log('saving old token data')
       const tokenExpires = new Date(expires);
       store.dispatch('updateToken', { token, tokenExpires });
     }
   }
 
   if (!store.getters.validToken) {
-    console.log('logout')
     store.dispatch('logout');
   }
   else if (!store.getters.isLoggedIn) {
-    console.log('getUser')
     await store.dispatch('getUser');
   }
 
   if (store.getters.isLoggedIn) { 
-    console.log('logged in!')
     routeRequiresAuth ? next() : next({ name: 'Profile' }); // TODO redirect to dashboard
   } else {
-    console.log('logged out')
     routeRequiresAuth ? next({ name: 'Home' }) : next();
   }
 });

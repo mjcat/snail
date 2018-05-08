@@ -2,7 +2,10 @@
 app-submit.btn.btn-outline-primary.submit(
   :label="label"
   :action="action"
+  :link="link"
   :validateForm="validateForm"
+  :successMessage="successMessage"
+  :errorMessage="errorMessage"
 )
 </template>
 
@@ -11,7 +14,14 @@ import AppSubmit from '@/components/containers/Submit';
 
 export default {
   components: { AppSubmit },
-  props: ['label', 'action', 'validateForm'],
+  props: [
+    'label',
+    'action',
+    'link',
+    'validateForm',
+    'successMessage',
+    'errorMessage',
+  ],
 };
 </script>
 

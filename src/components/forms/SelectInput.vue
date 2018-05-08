@@ -8,7 +8,6 @@ app-form-item(
     placeholder="Choose one"
     :value="value"
     @change="update"
-    clearable
   )
     el-option(
       v-for="option in options"

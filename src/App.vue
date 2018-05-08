@@ -1,19 +1,19 @@
 <template lang="pug">
 #app
+  app-action-feedback
   app-header
   router-view
   app-footer
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
-
+import AppActionFeedback from '@/components/alerts/ActionFeedback';
 import AppHeader from '@/views/Header';
 import AppFooter from '@/views/Footer';
 
 export default {
   name: 'App',
-  components: { AppHeader, AppFooter },
+  components: { AppHeader, AppFooter, AppActionFeedback },
 };
 </script>
 
