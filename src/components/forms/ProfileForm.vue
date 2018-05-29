@@ -2,12 +2,12 @@
 app-form-container(
   formName="profile"
   submitLabel="Save"
-  submitAction="updateUser"
-  submitLink="/dashboard"
+  submitAction="saveUser"
+  submitLink="/career"
   successMessage="Success! Your data has been updated."
   errorMessage="Oops, something went wrong. Please try again."
   cancelLabel="Cancel"
-  cancelLink="/dashboard"
+  cancelLink="/career"
   :formData="formData"
   :rules="rules"
 )

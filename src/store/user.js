@@ -15,8 +15,18 @@ export default {
       roleType: null,
       blacklistedCompanies: [],
     },
+    newPost: {
+      title: null,
+      text: null,
+    },
+    newComment: {
+      postId: null,
+      text: null,
+    },
     actionStatus: {
-      updateUser: null,
+      saveUser: null,
+      savePost: null,
+      saveComment: null,
     },
   },
   getters: {
@@ -33,6 +43,8 @@ export default {
     needsToken(state) {
       return !state.token || !state.tokenExpires;
     },
+    token(state) { return state.token; },
+
     firstName(state) { return state.name.first; },
     lastName(state) { return state.name.last; },
     nickname(state) { return state.nickname; },
@@ -40,9 +52,17 @@ export default {
     role(state) { return state.linkedIn.role; },
     roleType(state) { return state.linkedIn.roleType; },
     blacklistedCompanies(state) { return state.linkedIn.blacklistedCompanies; },
-    token(state) { return state.token; },
-    updateUserStatus(state) { return state.actionStatus.updateUser; },
+
+    newCommentPostId(state) { return state.newComment.postId; },
+    newCommentText(state) { return state.newComment.text; },
+    newPostTitle(state) { return state.newPost.title; },
+    newPostText(state) { return state.newPost.text; },
+
+    saveUserStatus(state) { return state.actionStatus.saveUser; },
+    savePostStatus(state) { return state.actionStatus.savePost; },
+    saveCommentStatus(state) { return state.actionStatus.saveComment; },
   },
+
   mutations: {
     updateToken(state, { token, tokenExpires }) {
       state.token = token;
@@ -69,8 +89,28 @@ export default {
     updateBlacklistedCompanies(state, values) {
       state.linkedIn.blacklistedCompanies = values;
     },
-    setUpdateUserStatus(state, value) {
-      state.actionStatus.updateUser = value;
+
+    updateNewCommentText(state, value) {
+      state.newComment.text = value;
+    },
+    updateNewCommentPostId(state, value) {
+      state.newComment.postId = value;
+    },
+    updateNewPostTitle(state, value) {
+      state.newPost.title = value;
+    },
+    updateNewPostText(state, value) {
+      state.newPost.text = value;
+    },
+
+    setSaveUserStatus(state, value) {
+      state.actionStatus.saveUser = value;
+    },
+    setSavePostStatus(state, value) {
+      state.actionStatus.savePost = value;
+    },
+    setSaveCommentStatus(state, value) {
+      state.actionStatus.saveComment = value;
     },
   },
   actions: {
@@ -97,8 +137,8 @@ export default {
         // noop
       }
     },
-    async updateUser({ commit, state, dispatch }) {
-      commit('setUpdateUserStatus', null);
+    async saveUser({ commit, state, dispatch }) {
+      commit('setSaveUserStatus', null);
 
       const token = state.token;
       if (!token) {
@@ -122,16 +162,52 @@ export default {
         const res = await axios.post('/api/user', data, options);
 
         if (res.status === 200) {
-          commit('setUpdateUserStatus', 'SUCCESS');
+          commit('setSaveUserStatus', 'SUCCESS');
 
           await dispatch('getUser');
         } else {
-          commit('setUpdateUserStatus', 'ERROR');
+          commit('setSaveUserStatus', 'ERROR');
         }
       } catch (e) {
-        commit('setUpdateUserStatus', 'ERROR');
+        commit('setSaveUserStatus', 'ERROR');
       }
     },
+    async saveComment({ commit, state, dispatch }) {
+      commit('setSaveCommentStatus', null);
+
+      const token = state.token;
+      if (!token) {
+        return;
+      }
+
+      try {
+        const data = {};
+        data.userData = {
+          firstName: state.name.first,
+          lastName: state.name.last,
+          role: state.linkedIn.role,
+          roleType: state.linkedIn.roleType,
+          nickname: state.nickname,
+          blacklistedCompanies: state.linkedIn.blacklistedCompanies,
+        };
+
+        const options = {};
+        options.headers = { 'Authorization': `Bearer ${token}` };
+
+        const res = await axios.post('/api/user', data, options);
+
+        if (res.status === 200) {
+          commit('setSaveCommentStatus', 'SUCCESS');
+
+          await dispatch('getUser');
+        } else {
+          commit('setSaveCommentStatus', 'ERROR');
+        }
+      } catch (e) {
+        commit('setSaveCommentStatus', 'ERROR');
+      }
+    },
+
     async login({ commit }, { accessCode }) {
       if (!accessCode) {
         return;

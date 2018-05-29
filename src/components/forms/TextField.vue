@@ -1,15 +1,15 @@
 <template lang="pug">
 app-form-item(
-  :label="label"
-  :description="description"
   :prop="prop"
   :rules="rules"
 )
   el-input(
+    type="textarea"
+    resize="none"
+    :rows="rows"
     :placeholder="placeholder"
     :value="value"
     @input="update"
-    clearable
   )
 </template>
 
@@ -19,8 +19,10 @@ import AppFormItem from '@/components/forms/FormItem';
 export default {
   components: { AppFormItem },
   props: {
-    label: String,
-    description: String,
+    placeholder: {
+      type: String,
+      required: true,
+    },
     value: {
       type: String,
       default: '',
@@ -29,9 +31,9 @@ export default {
       type: Function,
       required: true,
     },
-    placeholder: {
-      type: String,
-      default: 'Please input'
+    rows: {
+      type: Number,
+      default: 4,
     },
     rules: {
       type: Array,

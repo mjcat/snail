@@ -12,8 +12,14 @@ el-form-item.large-text(
 <script>
 export default {
   props: {
-    label: String,
-    description: String,
+    label: {
+      type: String,
+      required: false,
+    },
+    description: {
+      type: String,
+      required: false,
+    },
     rules: {
       type: Array,
       required: false,

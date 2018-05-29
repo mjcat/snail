@@ -1,6 +1,10 @@
+'use strict';
+
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
+  dateCreated: Date,
+  dateUpdated: Date,
   email: {
     type: String,
     required: true,

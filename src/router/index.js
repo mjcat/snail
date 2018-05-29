@@ -3,8 +3,14 @@ import Router from 'vue-router';
 
 import store from '@/store';
 
+import Header from '@/views/Header';
+import Footer from '@/views/Footer';
 import Home from '@/views/Home';
+import RouterLoading from '@/views/RouterLoading';
 import Profile from '@/views/Profile';
+import Posts from '@/views/Posts';
+import Post from '@/views/Post';
+import NewPost from '@/views/NewPost';
 
 Vue.use(Router);
 
@@ -14,7 +20,10 @@ const router = new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home,
+      components: {
+        default: Home,
+        header: Header,
+      },
       meta: { requiresAuth: false },
       beforeEnter: async (to, from, next) => {
         if (!store.state.isLoggedIn) {
@@ -26,13 +35,49 @@ const router = new Router({
     {
       path: '/profile',
       name: 'Profile',
-      component: Profile,
+      components: {
+        default: Profile,
+        header: Header,
+        footer: Footer,
+      },
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/career',
+      name: 'CareerPosts',
+      components: {
+        default: Posts,
+        header: Header,
+        footer: Footer,
+      },
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/career/post/:postId',
+      name: 'CareerPost',
+      components: {
+        default: Post,
+        header: Header,
+      },
+      meta: { requiresAuth: true },
+      props: { default: true, header: false },
+    },
+    {
+      path: '/career/new',
+      name: 'NewPost',
+      components: {
+        default: NewPost,
+        header: Header,
+        footer: Footer,
+      },
       meta: { requiresAuth: true },
     },
     {
       path: '/auth/linkedin',
       name: 'LinkedIn Authorization',
-      component: Profile, // temp
+      components: {
+        default: RouterLoading,
+      },
       meta: { requiresAuth: false },
       async beforeEnter(to, from, next) {
         const returnedCsrfToken = to.query.state;
@@ -74,7 +119,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (store.getters.isLoggedIn) { 
-    routeRequiresAuth ? next() : next({ name: 'Profile' }); // TODO redirect to dashboard
+    routeRequiresAuth ? next() : next({ name: 'CareerPosts' });
   } else {
     routeRequiresAuth ? next({ name: 'Home' }) : next();
   }

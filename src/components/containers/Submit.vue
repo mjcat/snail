@@ -31,7 +31,11 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['updateActionFeedback']),
+    ...mapMutations([
+      'updateActionFeedback',
+      'showLoading',
+      'hideLoading'
+    ]),
     async onClick(e) {
       e.preventDefault();
 
@@ -41,6 +45,7 @@ export default {
       }
 
       if (valid && this.action) {
+        this.showLoading();
         await this.$store.dispatch(this.action);
       }
     }
@@ -49,6 +54,8 @@ export default {
   watch: {
     submitStatus(status) {
       if (status === 'SUCCESS') {
+        this.hideLoading();
+
         this.updateActionFeedback({
           type: 'success',
           message: this.successMessage,
@@ -58,6 +65,8 @@ export default {
           this.$router.push({ path: this.link });
         }
       } else if (status === 'ERROR') {
+        this.hideLoading();
+
         this.updateActionFeedback({
           type: 'error',
           message: this.errorMessage,

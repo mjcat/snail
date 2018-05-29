@@ -18,6 +18,7 @@ el-form(
         :errorMessage="errorMessage"
       )
       app-cancel-button.inline(
+        v-if="cancelLabel"
         :label="cancelLabel"
         :link="cancelLink"
       )
@@ -54,7 +55,10 @@ export default {
     successMessage: String,
     errorMessage: String,
     // onSubmitHandler: null,
-    cancelLabel: String,
+    cancelLabel: {
+      type: String,
+      required: false,
+    },
     cancelLink: null,
     // onCancelHandler: null,
   },

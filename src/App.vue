@@ -1,23 +1,27 @@
 <template lang="pug">
-#app
+#app(v-loading="loading")
   app-action-feedback
-  app-header
-  router-view
-  app-footer
+  router-view(name="header")
+  router-view.content
+  router-view(name="footer")
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import AppActionFeedback from '@/components/alerts/ActionFeedback';
-import AppHeader from '@/views/Header';
-import AppFooter from '@/views/Footer';
 
 export default {
   name: 'App',
-  components: { AppHeader, AppFooter, AppActionFeedback },
+  components: { AppActionFeedback },
+  computed: {
+    ...mapGetters(['loading']),
+  },
 };
 </script>
 
 <style lang="stylus">
+@require './theme';
 /*#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -28,6 +32,8 @@ export default {
 
 #app
   margin-top: 60px
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif
+  font-family: $font-family
 
+.content
+  margin-top: $xl-margin + $lg-margin
 </style>

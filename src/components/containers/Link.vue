@@ -11,6 +11,7 @@ a(
 </template>
 
 <script>
+// TODO use router view instead of a tag
 export default {
   props: {
     label: String,

@@ -7,6 +7,7 @@ app-link.btn.btn-primary.primary(
 </template>
 
 <script>
+// TODO merge all buttons into one
 import AppLink from '@/components/containers/Link';
 
 export default {

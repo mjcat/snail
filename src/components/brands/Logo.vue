@@ -1,5 +1,5 @@
 <template lang="pug">
-app-link#logo(:link="'/'", :label="'VR Tech'")
+app-link#logo(:link="'/'", :label="'Revamp'")
 </template>
 
 <script>

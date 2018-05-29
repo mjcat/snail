@@ -6,6 +6,7 @@
 </template>
 
 <script>
+// TODO merge all headings into one
 export default {
   props: {
     title: {

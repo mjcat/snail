@@ -1,30 +1,54 @@
 <template lang="pug">
-header#header
+header.header
   .container-fluid
     .row
-      .col-md-2.col-xs-6
+      .col
         app-header-logo
-      .col-md-8
-      .col-md-2.col-xs-6
-        app-primary-button(label="Learn More")
+      .col.align-self-end
+        template(v-if="isLoggedIn")
+          app-user-nav.right.user-nav
+          app-secondary-button.right(
+            label="New"
+            link="/career/new"
+          )
+        template(v-else)
+          app-primary-button.right(label="Learn More")
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import AppPrimaryButton from '@/components/buttons/Primary';
+import AppSecondaryButton from '@/components/buttons/Secondary';
+import AppUserNav from '@/components/buttons/UserNav';
 import AppHeaderLogo from '@/components/brands/Logo';
 
 export default {
-  components: { AppPrimaryButton, AppHeaderLogo },
+  components: { AppPrimaryButton, AppSecondaryButton, AppUserNav, AppHeaderLogo },
+  computed: {
+    ...mapGetters(['isLoggedIn']),
+  },
 };
 </script>
 
 <style scoped lang="stylus">
-#header
-  background-color: #fff
+@require '../theme';
+
+.header
+  background-color: $white
   width: 100%
   position: fixed
   z-index: 100
-  border-bottom: 1px solid #ccc
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.25)
+  border-bottom: 1px solid $light-gray
+  box-shadow: 0 0 2px $gray--opacity--80
   top: 0
+  padding-top: $md-margin
+  padding-bottom: $md-margin
+  
+.right
+  float: right
+  
+.user-nav
+  margin-left: $lg-margin
+  margin-top: 5px
 </style>

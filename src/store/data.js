@@ -17,6 +17,7 @@ export default {
         type: '',
       },
     },
+    loading: false,
   },
   getters: {
     allRoles(state) {
@@ -31,6 +32,7 @@ export default {
     actionFeedback(state) {
       return state.notifications.actionFeedback;
     },
+    loading(state) { return state.loading; },
   },
   mutations: {
     updatePreflight(state, data) {
@@ -46,6 +48,8 @@ export default {
     resetActionFeedback(state) {
       state.notifications.actionFeedback.show = false;
     },
+    showLoading(state) { state.loading = true; },
+    hideLoading(state) { state.loading = false; },
   },
   actions: {
     preflight: async ({ commit }) => {
