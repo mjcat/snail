@@ -31,9 +31,8 @@ export default {
 }*/
 
 #app
-  margin-top: 60px
   font-family: $font-family
 
 .content
-  margin-top: $xl-margin + $lg-margin
+  margin-top: $xl-margin + $xl-margin
 </style>

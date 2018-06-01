@@ -1,5 +1,5 @@
 <template lang="pug">
-header.header
+header.header(:class="{ white: isLoggedIn || isMd }")
   .container-fluid
     .row
       .col
@@ -7,26 +7,41 @@ header.header
       .col.align-self-end
         template(v-if="isLoggedIn")
           app-user-nav.right.user-nav
-          app-secondary-button.right(
-            label="New"
+          app-button.right(
+            label="Ask Anything"
             link="/career/new"
           )
-        template(v-else)
-          app-primary-button.right(label="Learn More")
+        app-button.right(v-else label="Learn More" fill)
 </template>
 
 <script>
+// TODO bug with toggling button fill vs white based on isMd
 import { mapGetters } from 'vuex';
 
-import AppPrimaryButton from '@/components/buttons/Primary';
-import AppSecondaryButton from '@/components/buttons/Secondary';
+import AppButton from '@/components/buttons/Button';
 import AppUserNav from '@/components/buttons/UserNav';
 import AppHeaderLogo from '@/components/brands/Logo';
 
 export default {
-  components: { AppPrimaryButton, AppSecondaryButton, AppUserNav, AppHeaderLogo },
+  components: { AppButton, AppUserNav, AppHeaderLogo },
   computed: {
     ...mapGetters(['isLoggedIn']),
+  },
+  data() {
+    return {
+      isMd: document.documentElement.clientWidth <= 768,
+    };
+  },
+  methods: {
+    handleResize(e) {
+      this.isMd = document.documentElement.clientWidth <= 768;
+    }
+  },
+  mounted() {
+    window.addEventListener('resize', this.handleResize);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.handleResize);
   },
 };
 </script>
@@ -35,15 +50,17 @@ export default {
 @require '../theme';
 
 .header
-  background-color: $white
+  background-color: $invisible
   width: 100%
   position: fixed
   z-index: 100
-  border-bottom: 1px solid $light-gray
-  box-shadow: 0 0 2px $gray--opacity--80
   top: 0
   padding-top: $md-margin
   padding-bottom: $md-margin
+  &.white
+    background-color: $white
+    border-bottom: 1px solid $light-gray
+    box-shadow: 0 0 2px $gray--opacity--80
   
 .right
   float: right

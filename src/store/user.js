@@ -67,6 +67,9 @@ export default {
     updateToken(state, { token, tokenExpires }) {
       state.token = token;
       state.tokenExpires = tokenExpires;
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('tokenExpires', tokenExpires);
     },
     updateFirstName(state, value) {
       state.name.first = value;
@@ -222,9 +225,6 @@ export default {
         const now = new Date();
         const milsecs = res.data.user.expiresIn * 1000;
         const tokenExpires = milsecs ? new Date(now.getTime() + milsecs) : null;
-
-        localStorage.setItem('token', token);
-        localStorage.setItem('tokenExpires', tokenExpires);
 
         commit('updateToken', { token, tokenExpires });
       } catch (e) {

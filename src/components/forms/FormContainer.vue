@@ -17,19 +17,20 @@ el-form(
         :successMessage="successMessage"
         :errorMessage="errorMessage"
       )
-      app-cancel-button.inline(
+      app-button.inline(
         v-if="cancelLabel"
         :label="cancelLabel"
         :link="cancelLink"
+        secondary
       )
 </template>
 
 <script>
 import AppSubmitButton from '@/components/buttons/Submit';
-import AppCancelButton from '@/components/buttons/Cancel';
+import AppButton from '@/components/buttons/Button';
 
 export default {
-  components: { AppSubmitButton, AppCancelButton },
+  components: { AppSubmitButton, AppButton },
   props: {
     formName: {
       type: String,

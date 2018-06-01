@@ -113,8 +113,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (!store.getters.validToken) {
     store.dispatch('logout');
-  }
-  else if (!store.getters.isLoggedIn) {
+  } else if (!store.getters.isLoggedIn) {
     await store.dispatch('getUser');
   }
 

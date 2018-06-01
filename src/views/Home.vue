@@ -4,6 +4,7 @@ home-background
 </template>
 
 <script>
+// TODO content fade animation removed
 import HomeBackground from '@/components/home/HomeBackground';
 import HomeContent from '@/components/home/HomeContent';
 
