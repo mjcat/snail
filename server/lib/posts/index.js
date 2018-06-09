@@ -9,6 +9,7 @@ const ObjectId = mongoose.Types.ObjectId;
 
 const User = require('../../../models/User');
 const Post = require('../../../models/Post');
+const PermanentPost = require('../../../models/PermanentPost');
 
 const postsLib = {};
 
@@ -137,6 +138,21 @@ postsLib.create = async (userId, rawPost) => {
 
   await post.save();
 
+  // backup
+  const permanentPost = new PermanentPost({
+    dateCreated: moment(),
+    dateModified: moment(),
+    user: user._id,
+    title: rawPost.title,
+    text: rawPost.text,
+    expiredPostId: post._id,
+  });
+
+  permanentPost.blacklistedCompanies = user.linkedIn.blacklistedCompanies;
+  permanentPost.participatingCompanies.push(user.linkedIn.company);
+
+  await permanentPost.save();
+
   return true;
 };
 
@@ -193,6 +209,15 @@ postsLib.comment = async (userId, postHash, rawComment) => {
   post.blacklistedCompanies = newBlacklists.concat(post.blacklistedCompanies);
 
   await post.save();
+
+  // backup
+  const permanentPost = await PermanentPost.findOne({ expiredPostId: postId }).exec();
+  if (permanentPost) {
+    permanentPost.comments = post.comments;
+    permanentPost.participatingCompanies = post.participatingCompanies;
+    permanentPost.blacklistedCompanies = post.blacklistedCompanies;
+    await permanentPost.save();
+  }
 
   return true;
 };
