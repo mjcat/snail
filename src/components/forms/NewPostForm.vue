@@ -21,7 +21,7 @@ app-form-container(
   .row
     .col-sm-8
       app-text-field(
-        placeholder="Good advice starts with a detailed and specific question..."
+        placeholder="Good advice starts with a detailed and specific question. Include as much details as you feel comfortable..."
         :rows="10"
         prop="newPostText"
         :value="newPostText"

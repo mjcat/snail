@@ -5,8 +5,7 @@
       .row
         .col-md-6.align-self-center
           app-heading-one(
-            title="Learn, Share, and Accelerate Career Growth"
-            subtitle="Get real-time career advice from When you can't avoid workplace politics, learn to crush it."
+            title="Secure career advising platform powered by Blockchain"
           )
         .col-md-6
           .row
@@ -16,6 +15,14 @@
                 //- TODO better implementation of .text-center to stretch button
                 .text-center
                   app-linkedin-button
+                  el-popover(
+                    placement="top"
+                    width="350"
+                    trigger="click"
+                    content="We leverage LinkedIn's data to aggressively root out fake accounts and keep your information and identity safe."
+                  )
+                    .tip(slot="reference")
+                      | Why can't I sign up with my email?
 </template>
 
 <script>
@@ -33,3 +40,12 @@ export default {
   },
 };
 </script>
+
+<style lang="stylus" scoped>
+@require '../../theme';
+
+.tip
+  color: $light-gray
+  margin-top: $rg-margin
+  cursor: pointer
+</style>

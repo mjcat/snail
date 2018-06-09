@@ -6,19 +6,29 @@ footer.footer
         .heading Products
         ul.menu
           li
-            router-link(to="TODO") Web app
+            router-link(to="/product") Web app
           li
-            app-link(link="" label="Mobile app")
+            el-popover(
+              placement="top-start"
+              title="Coming soon!"
+              trigger="click"
+            )
+              app-link(slot="reference" label="Mobile app")
           li
-            router-link(to="") Premium
+            el-popover(
+              placement="top-start"
+              title="Coming soon!"
+              trigger="click"
+            )
+              app-link(slot="reference" label="Premium")
 
       .col-sm-4.col-xs-12
         .heading Company
         ul.menu
           li
-            router-link(to="") About us
+            router-link(to="/company") About us
           li
-            router-link(to="") Contact
+            router-link(to="/contact") Contact
 
       .col-sm-4.col-xs-12.align-self-center
         p.text-center
@@ -64,6 +74,8 @@ li /deep/ a
   &:hover
     text-decoration: none
 
+li /deep/ span
+  margin: 0
 p
   color: $dark-gray
 

@@ -3,15 +3,15 @@ header.header(:class="{ white: isLoggedIn || isMd }")
   .container-fluid
     .row
       .col
-        app-header-logo
+        app-header-logo(:secondary="!isLoggedIn && !isMd")
       .col.align-self-end
         template(v-if="isLoggedIn")
           app-user-nav.right.user-nav
           app-button.right(
-            label="Ask Anything"
+            label="Get Advice"
             path="/career/new"
           )
-        app-button.right(v-else label="Learn More" fill)
+        app-button.right(v-else path="/product" label="Learn More" fill)
 </template>
 
 <script>
@@ -66,6 +66,8 @@ export default {
   float: right
   
 .user-nav
-  margin-left: $lg-margin
+  margin-left: $rg-margin
   margin-top: 5px
+  @media(min-width: $screen-sm-min)
+    margin-left: $lg-margin
 </style>

@@ -19,7 +19,7 @@ export default {
         },
         {
           icon: 'fa-lock',
-          description: 'All posts are permanently deleted after 12 hours to protect your privacy',
+          description: 'Your posts are secured on the Blockchain and can only be accessed with your permission',
         },
         {
           icon: 'fa-user-secret',
