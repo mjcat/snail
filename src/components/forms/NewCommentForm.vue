@@ -1,7 +1,6 @@
 <template lang="pug">
 div
-  .extra-footer
-  app-form-container.fixed-bottom.opaque(
+  app-form-container(
     formName="comment"
     submitLabel="Reply"
     submitAction="saveComment"
@@ -54,14 +53,3 @@ export default {
   },
 };
 </script>
-
-<style lang="stylus" scoped>
-@require '../../theme';
-
-.extra-footer
-  height: $xl-padding + $xl-padding + $lg-padding
-  
-.opaque
-  background-color: $white
-  padding-top: 2px
-</style>

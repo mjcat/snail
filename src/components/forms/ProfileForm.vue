@@ -32,7 +32,7 @@ app-form-container(
     .col-sm-4
       app-text-input(
         label="Current Role"
-        description=""
+        description="Please enter your official role so we can better talor to your needs"
         prop="role"
         :value="role"
         :update="updateRole"
@@ -40,7 +40,7 @@ app-form-container(
     .col-sm-4
       app-select-input(
         label="Role Type"
-        description="We prioritize advice from professionals at or above your current level"
+        description="We prioritize advice from professionals at or above your level"
         prop="roleType"
         :value="roleType"
         :update="updateRoleType"

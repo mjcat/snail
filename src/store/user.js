@@ -116,6 +116,7 @@ export default {
       state.actionStatus.saveComment = value;
     },
   },
+
   actions: {
     async getUser({ commit, state }) {
       const token = state.token;
@@ -140,6 +141,7 @@ export default {
         // noop
       }
     },
+
     async saveUser({ commit, state, dispatch }) {
       commit('setSaveUserStatus', null);
 
@@ -175,6 +177,7 @@ export default {
         commit('setSaveUserStatus', 'ERROR');
       }
     },
+
     async saveComment({ commit, state, dispatch }) {
       commit('setSaveCommentStatus', null);
 
@@ -183,31 +186,56 @@ export default {
         return;
       }
 
+      const postId = state.newComment.postId;
+
       try {
-        const data = {};
-        data.userData = {
-          firstName: state.name.first,
-          lastName: state.name.last,
-          role: state.linkedIn.role,
-          roleType: state.linkedIn.roleType,
-          nickname: state.nickname,
-          blacklistedCompanies: state.linkedIn.blacklistedCompanies,
-        };
+        const data = { postId };
+        data.comment = { text: state.newComment.text };
 
         const options = {};
         options.headers = { 'Authorization': `Bearer ${token}` };
 
-        const res = await axios.post('/api/user', data, options);
+        const res = await axios.post('/api/posts/comment', data, options);
 
         if (res.status === 200) {
           commit('setSaveCommentStatus', 'SUCCESS');
+          commit('updateNewCommentText', null);
 
-          await dispatch('getUser');
+          await dispatch('getPost', postId);
         } else {
           commit('setSaveCommentStatus', 'ERROR');
         }
       } catch (e) {
         commit('setSaveCommentStatus', 'ERROR');
+      }
+    },
+
+    async savePost({ commit, state }) {
+      commit('setSavePostStatus', null);
+
+      const token = state.token;
+      if (!token) {
+        return;
+      }
+
+      try {
+        const data = {};
+        data.post = state.newPost;
+
+        const options = {};
+        options.headers = { 'Authorization': `Bearer ${token}` };
+
+        const res = await axios.post('/api/posts/new', data, options);
+
+        if (res.status === 200) {
+          commit('setSavePostStatus', 'SUCCESS');
+          commit('updateNewPostTitle', null);
+          commit('updateNewPostText', null);
+        } else {
+          commit('setSavePostStatus', 'ERROR');
+        }
+      } catch (e) {
+        commit('setSavePostStatus', 'ERROR');
       }
     },
 

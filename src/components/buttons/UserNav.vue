@@ -3,7 +3,7 @@ el-dropdown(placement="bottom" trigger="click")
   i.fa.icon.fa-user-circle.fa-2x
   el-dropdown-menu.menu(slot="dropdown")
     el-dropdown-item
-      app-link(link="/profile" label="My Info")
+      router-link(to="/profile") My Info
     el-dropdown-item(divided)
       app-link(:onClickHandler="performLogout" label="Logout")
 </template>

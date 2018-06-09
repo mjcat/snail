@@ -16,16 +16,21 @@ const messageSchema = {
   previous: [String],
   votes: {
     likes: { type: Number, default: 0 },
+    dislikes: { type: Number, default: 0 },
     laughs: { type: Number, default: 0 },
   },
 };
 
 module.exports = {
   ...messageSchema,
+  title: String,
   blacklistedCompanies: [{
     type: Schema.ObjectId,
     ref: 'Company',
-    unique: true,
+  }],
+  participatingCompanies: [{
+    type: Schema.ObjectId,
+    ref: 'Company',
   }],
   comments: [messageSchema],
 };

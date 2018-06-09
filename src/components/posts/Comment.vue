@@ -10,6 +10,8 @@
       :likes="likes"
       :laughs="laughs"
       :dislikes="dislikes"
+      :postId="postId"
+      :commentNumber="commentNumber"
     )
 </template>
 
@@ -52,6 +54,8 @@ export default {
       type: Number,
       default: 0,
     },
+    postId: String,
+    commentNumber: Number,
   },
 };
 </script>

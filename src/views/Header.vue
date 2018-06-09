@@ -9,7 +9,7 @@ header.header(:class="{ white: isLoggedIn || isMd }")
           app-user-nav.right.user-nav
           app-button.right(
             label="Ask Anything"
-            link="/career/new"
+            path="/career/new"
           )
         app-button.right(v-else label="Learn More" fill)
 </template>

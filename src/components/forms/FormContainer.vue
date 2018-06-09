@@ -20,7 +20,7 @@ el-form(
       app-button.inline(
         v-if="cancelLabel"
         :label="cancelLabel"
-        :link="cancelLink"
+        :path="cancelLink"
         secondary
       )
 </template>

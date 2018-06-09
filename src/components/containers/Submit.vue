@@ -10,6 +10,7 @@ export default {
   props: {
     label: String,
     action: String,
+    param: Object,
     link: {
       type: String,
       required: false,
@@ -46,7 +47,7 @@ export default {
 
       if (valid && this.action) {
         this.showLoading();
-        await this.$store.dispatch(this.action);
+        await this.$store.dispatch(this.action, this.param);
       }
     }
   },

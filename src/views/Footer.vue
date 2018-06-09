@@ -6,19 +6,19 @@ footer.footer
         .heading Products
         ul.menu
           li
-            app-link(link="TODO" label="Web app")
+            router-link(to="TODO") Web app
           li
             app-link(link="" label="Mobile app")
           li
-            app-link(link="" label="Premium")
+            router-link(to="") Premium
 
       .col-sm-4.col-xs-12
         .heading Company
         ul.menu
           li
-            app-link(link="" label="About us")
+            router-link(to="") About us
           li
-            app-link(link="" label="Contact")
+            router-link(to="") Contact
 
       .col-sm-4.col-xs-12.align-self-center
         p.text-center

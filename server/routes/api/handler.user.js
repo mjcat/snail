@@ -50,7 +50,7 @@ handler.update = async (req, res) => {
     debug('error: ' + e);
     throw Boom.badImplementation('User update error');
   }
-}
+};
 
 handler.getCompanySuggestions = async (req, res) => {
   debug('getCompanySuggestions');

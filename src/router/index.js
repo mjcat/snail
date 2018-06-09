@@ -51,6 +51,10 @@ const router = new Router({
         footer: Footer,
       },
       meta: { requiresAuth: true },
+      beforeEnter: async (to, from, next) => {
+        await store.dispatch('getAllPosts');
+        next();
+      },
     },
     {
       path: '/career/post/:postId',
@@ -61,6 +65,11 @@ const router = new Router({
       },
       meta: { requiresAuth: true },
       props: { default: true, header: false },
+      beforeEnter: async (to, from, next) => {
+        const postId = to.params.postId;
+        await store.dispatch('getPost', postId);
+        next();
+      },
     },
     {
       path: '/career/new',

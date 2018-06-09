@@ -1,10 +1,14 @@
 <template lang="pug">
-app-link.btn(
-  :class="classMap"
-  :link="link"
-  :label="label"
-  :onClickHandler="onClickHandler"
-)
+span
+  router-link.btn(v-if="path" :to="path" :class="classMap")
+    | {{ label }}
+  app-link.btn(
+    v-else
+    :class="classMap"
+    :link="link"
+    :label="label"
+    :onClickHandler="onClickHandler"
+  )
 </template>
 
 <script>
@@ -13,7 +17,8 @@ import AppLink from '@/components/containers/Link';
 export default {
   components: { AppLink },
   props: {
-    link: String,
+    link: String, // external urls
+    path: String, // internal using router-link
     label: String,
     onClickHandler: Function,
     secondary: {

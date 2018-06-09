@@ -15,7 +15,7 @@ a(
 export default {
   props: {
     label: String,
-    link: {
+    link: { // external urls or click handlers
       type: String,
       default: 'javascript:void(0)',
     },

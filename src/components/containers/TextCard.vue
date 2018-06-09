@@ -10,12 +10,26 @@ el-card.post(
     app-user-display(:nickname="nickname" :role="role")
     .description {{ generatedDesc }}
   div
-    span.fa-stack.votes-left(v-if="likes > 0")
-      i.fa.fa-thumbs-up.fa-stack-2x
+    span.fa-stack.votes-left(v-if="likes > 0 || !isSummary")
+      app-submit.fa.fa-thumbs-up.fa-stack-2x(
+        v-if="!isSummary"
+        action="saveVote"
+        :param="{ postId, commentNumber, type: 'likes'}"
+        successMessage="Thanks for voting!"
+        errorMessage="Oops, something went wrong. Please try again."
+      )
+      i.fa.fa-thumbs-up.fa-stack-2x(v-else)
       strong.fa-stack-1x.icon-text {{ likes }}
 
-    span.fa-stack.votes-left(v-if="laughs > 0")
-      i.fa.fa-smile-o.fa-stack-2x
+    span.fa-stack.votes-left(v-if="laughs > 0 || !isSummary")
+      app-submit.fa.fa-smile-o.fa-stack-2x(
+        v-if="!isSummary"
+        action="saveVote"
+        :param="{ postId, commentNumber, type: 'laughs'}"
+        successMessage="Thanks for voting!"
+        errorMessage="Oops, something went wrong. Please try again."
+      )
+      i.fa.fa-smile-o.fa-stack-2x(v-else)
       strong.fa-stack-1x.icon-text {{ laughs }}
 
     span.fa-stack.votes-right(v-if="isSummary")
@@ -23,7 +37,14 @@ el-card.post(
       strong.fa-stack-1x.icon-text {{ comments }}
 
     span.fa-stack.votes-right(v-else)
-      i.fa.fa-thumbs-down.fa-stack-2x
+      app-submit.fa.fa-thumbs-down.fa-stack-2x(
+        v-if="!isSummary"
+        action="saveVote"
+        :param="{ postId, commentNumber, type: 'dislikes'}"
+        successMessage="Thanks for voting!"
+        errorMessage="Oops, something went wrong. Please try again."
+      )
+      i.fa.fa-thumbs-down.fa-stack-2x(v-else)
       strong.fa-stack-1x.icon-text {{ dislikes }}
 </template>
 
@@ -31,9 +52,10 @@ el-card.post(
 import AppLink from '@/components/containers/Link';
 import AppCountdown from '@/components/containers/Countdown';
 import AppUserDisplay from '@/components/posts/UserDisplay';
+import AppSubmit from '@/components/containers/Submit';
 
 export default {
-  components: { AppLink, AppCountdown, AppUserDisplay },
+  components: { AppLink, AppCountdown, AppUserDisplay, AppSubmit },
   
   props: {
     title: {
@@ -80,6 +102,9 @@ export default {
       type: Number,
       required: false,
     },
+    postId: String,
+    commentNumber: Number,
+
   },
 
   data() {
@@ -129,6 +154,11 @@ export default {
 <style lang="stylus" scoped>
 @require '../../theme';
 
+a
+  color: #333333
+  &:hover
+    text-decoration: none
+  
 .post
   margin-bottom: $lg-margin
   &.highlight

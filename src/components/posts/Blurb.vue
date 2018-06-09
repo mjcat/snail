@@ -1,5 +1,5 @@
 <template lang="pug">
-app-link.link(:href="'/career/post/' + postId")
+router-link.link(:to="'/career/post/' + postId")
   app-text-card(
     :isSummary="true"
     :expiresIn="expiresIn"
@@ -15,11 +15,10 @@ app-link.link(:href="'/career/post/' + postId")
 </template>
 
 <script>
-import AppLink from '@/components/containers/Link';
 import AppTextCard from '@/components/containers/TextCard';
 
 export default {
-  components: { AppLink, AppTextCard },
+  components: { AppTextCard },
   props: {
     postId: {
       type: String,
